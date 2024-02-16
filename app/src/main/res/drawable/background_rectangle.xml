@@ -3,7 +3,7 @@
     android:width="336dp"
     android:height="741dp"
     android:viewportWidth="336"
-    android:viewportHeight="741">
+    android:viewportHeight="891"> <!-- prima era 741-->
   <path
       android:pathData="M35,0L300.35,0A35,35 0,0 1,335.35 35L335.35,706A35,35 0,0 1,300.35 741L35,741A35,35 0,0 1,0 706L0,35A35,35 0,0 1,35 0z">
     <aapt:attr name="android:fillColor">

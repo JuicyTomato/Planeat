@@ -2,16 +2,15 @@ package com.example.planeat
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.graphics.Typeface
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.util.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,6 +47,9 @@ class MainActivity : AppCompatActivity() {
         val button3 = findViewById<Button>(R.id.button3)
         val button4 = findViewById<Button>(R.id.button4)
 
+
+
+
         //per spostare sopra bulb ai bottoni
         button1.setOnClickListener {
             moveBulbToButton(button1)
@@ -57,6 +59,8 @@ class MainActivity : AppCompatActivity() {
         }
         button3.setOnClickListener {
             moveBulbToButton(button3)
+            val intent = Intent(this, ShoppingList::class.java)
+            startActivity(intent)
         }
         button4.setOnClickListener {
             moveBulbToButton(button4)
@@ -65,6 +69,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    //Non serve a nulla, pensa altro modo
     //funzione per spostare bulb sopra ai bottoni
     private fun moveBulbToButton(button: Button) {
         //il 512, penso vada cambiato in base al dispositivo che si utilizza... (anche se aumenti lunghezza long_square)
