@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">PlanEat</string>
     <string name="back">back</string>
+    <string name="ciao">PERCHé NON FA</string>
+    <string name="shared">shared</string>
+    <string name="list">list</string>
+    <string name="home">home</string>
+    <string name="explore">explore</string>
 </resources>
