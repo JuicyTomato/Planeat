@@ -12,10 +12,11 @@
         android:id="@+id/rectangleHome1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@null"
         android:src="@drawable/rectangle_home"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,6 +24,7 @@
         android:id="@+id/rectangleHome2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@null"
         android:src="@drawable/rectangle_home"
         app:layout_constraintBottom_toTopOf="@+id/rectangleHome3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,10 +37,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="188dp"
+        android:contentDescription="@null"
         android:src="@drawable/rectangle_home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -47,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="14dp"
+        android:contentDescription="@null"
         android:src="@drawable/small_rectangle_home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rectangleHome3" />
@@ -56,6 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
+        android:contentDescription="@null"
         android:src="@drawable/small_rectangle_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
@@ -67,9 +72,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:contentDescription="@null"
         android:src="@drawable/long_rectangle_home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/smallRectangleHome1"
         app:layout_constraintVertical_bias="0.0" />
@@ -79,17 +86,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:contentDescription="@null"
         android:src="@drawable/default_square"
         app:layout_constraintBottom_toBottomOf="@+id/rectangleHome1"
         app:layout_constraintStart_toStartOf="@+id/rectangleHome1"
         app:layout_constraintTop_toTopOf="@+id/rectangleHome1"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.521" />
 
     <ImageView
         android:id="@+id/defaultSquare2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:contentDescription="@null"
         android:src="@drawable/default_square"
         app:layout_constraintBottom_toBottomOf="@+id/rectangleHome2"
         app:layout_constraintStart_toStartOf="@+id/rectangleHome2"
@@ -97,14 +106,271 @@
         app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
-        android:id="@+id/defaultSquare3"
+        android:id="@+id/seSquare1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:src="@drawable/default_square"
+        android:contentDescription="@null"
+        android:src="@drawable/se_square"
         app:layout_constraintBottom_toBottomOf="@+id/rectangleHome3"
         app:layout_constraintStart_toStartOf="@+id/rectangleHome3"
         app:layout_constraintTop_toTopOf="@+id/rectangleHome3"
         app:layout_constraintVertical_bias="0.5" />
+
+
+    <ImageView
+        android:id="@+id/TODAY"
+        android:layout_width="57dp"
+        android:layout_height="17dp"
+        android:contentDescription="@null"
+        android:src="@drawable/today"
+        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare1"
+        app:layout_constraintEnd_toEndOf="@+id/defaultSquare1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/defaultSquare1"
+        app:layout_constraintTop_toTopOf="@+id/defaultSquare1"
+        app:layout_constraintVertical_bias="0.88" />
+
+    <ImageView
+        android:id="@+id/TOMORROW"
+        android:layout_width="73dp"
+        android:layout_height="25dp"
+        android:contentDescription="@null"
+        android:src="@drawable/tomorrow"
+        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare2"
+        app:layout_constraintEnd_toEndOf="@+id/defaultSquare2"
+        app:layout_constraintStart_toStartOf="@+id/defaultSquare2"
+        app:layout_constraintTop_toTopOf="@+id/defaultSquare2"
+        app:layout_constraintVertical_bias="0.88" />
+
+    <ImageView
+        android:id="@+id/SPECIALEVENT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:src="@drawable/specialevent"
+        app:layout_constraintBottom_toBottomOf="@+id/seSquare1"
+        app:layout_constraintEnd_toEndOf="@+id/seSquare1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/seSquare1"
+        app:layout_constraintTop_toTopOf="@+id/seSquare1"
+        app:layout_constraintVertical_bias="0.88" />
+
+
+    <ImageView
+        android:id="@+id/littleList1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:contentDescription="@null"
+        android:src="@drawable/little_list_home4"
+        app:layout_constraintEnd_toEndOf="@+id/rectangleHome1"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toEndOf="@+id/defaultSquare1"
+        app:layout_constraintTop_toTopOf="@+id/rectangleHome1" />
+
+    <ImageView
+        android:id="@+id/littleList2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@null"
+        android:src="@drawable/little_list_home2"
+        app:layout_constraintBottom_toTopOf="@+id/littleList3"
+        app:layout_constraintEnd_toEndOf="@+id/rectangleHome1"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toEndOf="@+id/defaultSquare1"
+        app:layout_constraintTop_toBottomOf="@+id/littleList1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/littleList3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@null"
+        android:src="@drawable/little_list_home3"
+        app:layout_constraintBottom_toBottomOf="@+id/rectangleHome1"
+        app:layout_constraintEnd_toEndOf="@+id/rectangleHome1"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toEndOf="@+id/defaultSquare1" />
+
+    <ImageView
+        android:id="@+id/littleList4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:contentDescription="@null"
+        android:src="@drawable/little_list_home4"
+        app:layout_constraintEnd_toEndOf="@+id/rectangleHome2"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toEndOf="@+id/defaultSquare2"
+        app:layout_constraintTop_toTopOf="@+id/rectangleHome2" />
+
+    <ImageView
+        android:id="@+id/littleList5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@null"
+        android:src="@drawable/little_list_home5"
+        app:layout_constraintBottom_toTopOf="@+id/littleList6"
+        app:layout_constraintEnd_toEndOf="@+id/rectangleHome2"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toEndOf="@+id/defaultSquare2"
+        app:layout_constraintTop_toBottomOf="@+id/littleList4"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/littleList6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@null"
+        android:src="@drawable/little_list_home6"
+        app:layout_constraintBottom_toBottomOf="@+id/rectangleHome2"
+        app:layout_constraintEnd_toEndOf="@+id/rectangleHome2"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toEndOf="@+id/defaultSquare2" />
+
+    <ImageView
+        android:id="@+id/littleList7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:contentDescription="@null"
+        android:src="@drawable/little_list_home7"
+        app:layout_constraintEnd_toEndOf="@+id/rectangleHome3"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toEndOf="@+id/seSquare1"
+        app:layout_constraintTop_toTopOf="@+id/rectangleHome3" />
+
+    <ImageView
+        android:id="@+id/littleList8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:src="@drawable/little_list_home8"
+        app:layout_constraintBottom_toTopOf="@+id/littleList9"
+        app:layout_constraintEnd_toEndOf="@+id/rectangleHome3"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toEndOf="@+id/seSquare1"
+        app:layout_constraintTop_toBottomOf="@+id/littleList7"
+        app:layout_constraintVertical_bias="0.464" />
+
+    <ImageView
+        android:id="@+id/littleList9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@null"
+        android:src="@drawable/little_list_home9"
+        app:layout_constraintBottom_toBottomOf="@+id/rectangleHome3"
+        app:layout_constraintEnd_toEndOf="@+id/rectangleHome3"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toEndOf="@+id/seSquare1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/PLANYOUREATS"
+        android:layout_width="107dp"
+        android:layout_height="49dp"
+        android:contentDescription="@null"
+        android:src="@drawable/planyoureats"
+        app:layout_constraintBottom_toBottomOf="@+id/smallRectangleHome1"
+        app:layout_constraintEnd_toEndOf="@+id/smallRectangleHome1"
+        app:layout_constraintStart_toStartOf="@+id/smallRectangleHome1"
+        app:layout_constraintTop_toTopOf="@+id/smallRectangleHome1" />
+
+    <ImageView
+        android:id="@+id/FRIDGE"
+        android:layout_width="80dp"
+        android:layout_height="36dp"
+        android:contentDescription="@null"
+        android:src="@drawable/fridge"
+        app:layout_constraintBottom_toBottomOf="@+id/smallRectangleHome2"
+        app:layout_constraintEnd_toEndOf="@+id/smallRectangleHome2"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="@+id/smallRectangleHome2"
+        app:layout_constraintTop_toTopOf="@+id/smallRectangleHome2"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/search"
+        android:layout_width="34dp"
+        android:layout_height="59dp"
+        android:contentDescription="@null"
+        android:src="@drawable/search"
+        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+        app:layout_constraintEnd_toStartOf="@+id/home"
+        app:layout_constraintStart_toStartOf="@+id/longRectangle"
+        app:layout_constraintTop_toTopOf="@+id/longRectangle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/home"
+        android:layout_width="34dp"
+        android:layout_height="59dp"
+        android:contentDescription="@null"
+        android:src="@drawable/home"
+        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+        app:layout_constraintEnd_toStartOf="@+id/shoppingList"
+        app:layout_constraintStart_toEndOf="@+id/search"
+        app:layout_constraintTop_toTopOf="@+id/longRectangle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/shoppingList"
+        android:layout_width="34dp"
+        android:layout_height="59dp"
+        android:contentDescription="@null"
+        android:src="@drawable/listcart"
+        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+        app:layout_constraintEnd_toStartOf="@+id/person"
+        app:layout_constraintStart_toEndOf="@+id/home"
+        app:layout_constraintTop_toTopOf="@+id/longRectangle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/person"
+        android:layout_width="34dp"
+        android:layout_height="59dp"
+        android:contentDescription="@null"
+        android:src="@drawable/person"
+        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+        app:layout_constraintEnd_toEndOf="@+id/longRectangle"
+        app:layout_constraintStart_toEndOf="@+id/shoppingList"
+        app:layout_constraintTop_toTopOf="@+id/longRectangle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/fridgeIcon"
+        android:layout_width="19dp"
+        android:layout_height="37dp"
+        android:contentDescription="@null"
+        android:src="@drawable/fridgeicon"
+        app:layout_constraintBottom_toBottomOf="@+id/FRIDGE"
+        app:layout_constraintEnd_toEndOf="@+id/smallRectangleHome2"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toEndOf="@+id/FRIDGE"
+        app:layout_constraintTop_toTopOf="@+id/FRIDGE" />
+
+    <ImageView
+        android:id="@+id/calendarList"
+        android:layout_width="30dp"
+        android:layout_height="27dp"
+        android:contentDescription="@null"
+        android:src="@drawable/calendarlist"
+        app:layout_constraintBottom_toBottomOf="@+id/PLANYOUREATS"
+        app:layout_constraintEnd_toEndOf="@+id/PLANYOUREATS"
+        app:layout_constraintHorizontal_bias="0.831"
+        app:layout_constraintStart_toStartOf="@+id/PLANYOUREATS"
+        app:layout_constraintTop_toTopOf="@+id/PLANYOUREATS"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@fonts/Inter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
