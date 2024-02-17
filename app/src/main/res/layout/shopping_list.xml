@@ -10,14 +10,13 @@
     <ImageView
 
         android:id="@+id/imageView"
-        android:layout_width="373dp"
-        android:layout_height="758dp"
+        android:layout_width="342dp"
+        android:layout_height="623dp"
         android:src="@drawable/background_rectangle"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomMenuBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -27,24 +26,28 @@
         android:text="@string/shopping_list"
         android:textColor="@color/textColor"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.07" />
 
-    <TextView
+    <!--
+    <EditText
         android:id="@+id/textView"
         android:layout_width="297dp"
-        android:layout_height="488dp"
-        android:text="fbrwvrwvww\nafsfs\ngrerg\ncbdf\nfwfd\nsdgdf\nd\nfd\n\f\n\n\n\nf\n\f\n\nfnffef\n\n\n\n\n\n\\ndggrg\n\n\n\n\n\\n\nfdsf\nf\nf\nf"
-        android:textColor="@color/white"
+        android:layout_height="496dp"
+        android:hint="@string/hintShoppingList"
+        android:textColorHint="@color/textColor"
+        android:fontFamily="@font/relay_inter_light"
         app:layout_constraintBottom_toTopOf="@+id/bottomMenuBar"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.228" />
+        -->
 
     <ImageView
         android:id="@+id/bulb"
@@ -52,13 +55,13 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_marginStart="230dp"
+        android:layout_marginBottom="79dp"
         android:contentDescription="@null"
         android:src="@drawable/bulb"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/bottomMenuBar"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginStart="230dp"
-        android:layout_marginBottom="42dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomMenuBar"
@@ -80,7 +83,55 @@
         app:labelVisibilityMode="labeled"/>
 
 
+    <!-- inizio prova -->
 
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="330dp"
+        android:layout_height="514dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.41">
 
-    <!-- Pulsanti finiti-->
+        <LinearLayout
+            android:id="@+id/linearList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewIngredientsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/relay_inika_regular"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextIngredient"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/textView" />
+
+            <EditText
+                android:id="@+id/editTextIngredient"
+                android:layout_width="322dp"
+                android:layout_height="51dp"
+                android:hint="@string/hintEditTextShoppingList"
+                android:textColorHint="@color/hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:fontFamily="@font/relay_inika_regular"
+                app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                android:backgroundTint="@android:color/transparent"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- fine prova -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

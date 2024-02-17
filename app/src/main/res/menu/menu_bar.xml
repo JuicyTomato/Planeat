@@ -7,8 +7,7 @@
         android:layout_height="59dp"
         android:contentDescription="@null"
         android:icon="@drawable/search"
-        android:title="explore"
-        android:tooltipText="search"/>
+        android:title="@string/explore" />
 
     <item
         android:id="@+id/homeIcon"
@@ -16,8 +15,7 @@
         android:layout_height="59dp"
         android:contentDescription="@null"
         android:icon="@drawable/home"
-        android:title="home"
-        android:tooltipText="home"/>
+        android:title="@string/home" />
 
     <item
         android:id="@+id/shoppingListIcon"
@@ -25,8 +23,7 @@
         android:layout_height="59dp"
         android:contentDescription="@null"
         android:icon="@drawable/listcart"
-        android:title="list"
-        android:tooltipText="list"/>
+        android:title="@string/list" />
 
     <item
         android:id="@+id/personIcon"
@@ -34,7 +31,6 @@
         android:layout_height="59dp"
         android:contentDescription="@null"
         android:icon="@drawable/person"
-        android:title="person"
-        android:tooltipText="person"/>
+        android:title="@string/shared" />
 
 </menu>

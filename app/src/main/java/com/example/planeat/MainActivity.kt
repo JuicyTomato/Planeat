@@ -60,8 +60,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.exploreIcon -> {}
 
                 R.id.shoppingListIcon -> {
-
-                    moveBulbToView(findViewById(R.id.shoppingListIcon))
+                    //moveBulbToView(findViewById(R.id.shoppingListIcon))
 
                     val intent = Intent(this, ShoppingList::class.java)
                     startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
@@ -92,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         animator.start()
     }*/
 
+    //Per movimento bulb... Penso che toglierò animazioni e terrò solamente bulb
     private fun moveBulbToView(view: View) {
         // Calcola la destinazione X dell'immagine in base al centro della vista
         val destinationX = view.x + (view.width / 2) - (bulbImageView.width / 2) - 512
