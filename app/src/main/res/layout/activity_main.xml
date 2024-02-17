@@ -50,8 +50,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="14dp"
+        android:layout_marginBottom="15dp"
         android:contentDescription="@null"
         android:src="@drawable/small_rectangle_home"
+        app:layout_constraintBottom_toTopOf="@+id/bottomMenuBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rectangleHome3" />
 
@@ -60,28 +62,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
+        android:layout_marginBottom="15dp"
         android:contentDescription="@null"
         android:src="@drawable/small_rectangle_home"
+        app:layout_constraintBottom_toTopOf="@+id/bottomMenuBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toEndOf="@+id/smallRectangleHome1"
         app:layout_constraintTop_toBottomOf="@+id/rectangleHome3" />
 
     <!-- line da seguire -->
-
-    <ImageView
-        android:id="@+id/bulb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:contentDescription="@null"
-        android:src="@drawable/bulb"
-        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
-        app:layout_constraintEnd_toEndOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/smallRectangleHome1"
-        app:layout_constraintVertical_bias="0.134" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -90,19 +80,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="1.778"/>
 
-    <ImageView
-        android:id="@+id/longRectangle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@null"
-        android:src="@drawable/long_rectangle_home"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/smallRectangleHome1"
-        app:layout_constraintVertical_bias="0.0" />
+
 
     <ImageView
         android:id="@+id/defaultSquare1"
@@ -319,54 +297,6 @@
         app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
-        android:id="@+id/search"
-        android:layout_width="34dp"
-        android:layout_height="59dp"
-        android:contentDescription="@null"
-        android:src="@drawable/search"
-        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
-        app:layout_constraintEnd_toStartOf="@+id/homeIcon"
-        app:layout_constraintStart_toStartOf="@+id/longRectangle"
-        app:layout_constraintTop_toTopOf="@+id/longRectangle"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/homeIcon"
-        android:layout_width="34dp"
-        android:layout_height="59dp"
-        android:contentDescription="@null"
-        android:src="@drawable/home"
-        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
-        app:layout_constraintEnd_toStartOf="@+id/shoppingListIcon"
-        app:layout_constraintStart_toEndOf="@+id/search"
-        app:layout_constraintTop_toTopOf="@+id/longRectangle"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/shoppingListIcon"
-        android:layout_width="34dp"
-        android:layout_height="59dp"
-        android:contentDescription="@null"
-        android:src="@drawable/listcart"
-        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
-        app:layout_constraintEnd_toStartOf="@+id/personIcon"
-        app:layout_constraintStart_toEndOf="@+id/homeIcon"
-        app:layout_constraintTop_toTopOf="@+id/longRectangle"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/personIcon"
-        android:layout_width="34dp"
-        android:layout_height="59dp"
-        android:contentDescription="@null"
-        android:src="@drawable/person"
-        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
-        app:layout_constraintEnd_toEndOf="@+id/longRectangle"
-        app:layout_constraintStart_toEndOf="@+id/shoppingListIcon"
-        app:layout_constraintTop_toTopOf="@+id/longRectangle"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
         android:id="@+id/fridgeIcon"
         android:layout_width="19dp"
         android:layout_height="37dp"
@@ -377,6 +307,7 @@
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toEndOf="@+id/FRIDGE"
         app:layout_constraintTop_toTopOf="@+id/FRIDGE" />
+
 
     <ImageView
         android:id="@+id/calendarListIcon"
@@ -391,71 +322,157 @@
         app:layout_constraintTop_toTopOf="@+id/PLANYOUREATS"
         app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/exploreText"
+    <ImageView
+        android:id="@+id/bulb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:text="@string/explore"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
-        app:layout_constraintEnd_toEndOf="@+id/search"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toStartOf="@+id/search"
-        app:layout_constraintTop_toTopOf="@+id/search"
-        app:layout_constraintVertical_bias="0.8"
-        tools:ignore="SmallSp" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@null"
+        android:src="@drawable/bulb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/bottomMenuBar"
+        app:layout_constraintTop_toBottomOf="@+id/smallRectangleHome1"
+        android:layout_marginStart="130dp"
+        android:layout_marginBottom="77dp"/>
 
-    <TextView
-        android:id="@+id/homeText"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomMenuBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:text="@string/home"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
-        app:layout_constraintEnd_toEndOf="@+id/homeIcon"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/homeIcon"
-        app:layout_constraintTop_toTopOf="@+id/homeIcon"
-        app:layout_constraintVertical_bias="0.8"
-        tools:ignore="SmallSp" />
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/long_rectangle_home"
+        android:contentDescription="@null"
+        app:itemIconSize="35dp"
+        app:itemIconTint="@color/white"
+        app:itemRippleColor="@android:color/transparent"
+        app:itemTextColor="@color/white"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_bar" />
 
-    <TextView
-        android:id="@+id/listText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:text="@string/list"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
-        app:layout_constraintEnd_toEndOf="@+id/shoppingListIcon"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/shoppingListIcon"
-        app:layout_constraintTop_toTopOf="@+id/longRectangle"
-        app:layout_constraintVertical_bias="0.8"
-        tools:ignore="SmallSp" />
+    <!--
+    Qui ho creato menu, ma qui ci sarebbe il menu funzionante ma solo
+    visibile e operativa per questa activity... Per cui ho creato
+    la directory menu con dentro il menù
 
-    <TextView
-        android:id="@+id/sharedText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:text="@string/shared"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
-        app:layout_constraintEnd_toEndOf="@+id/personIcon"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/personIcon"
-        app:layout_constraintTop_toTopOf="@+id/longRectangle"
-        app:layout_constraintVertical_bias="0.8"
-        tools:ignore="SmallSp" />
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="34dp"
+            android:layout_height="59dp"
+            android:contentDescription="@null"
+            android:src="@drawable/search"
+            app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+            app:layout_constraintEnd_toStartOf="@+id/homeIcon"
+            app:layout_constraintStart_toStartOf="@+id/longRectangle"
+            app:layout_constraintTop_toTopOf="@+id/longRectangle"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <!-- Bottoni icone sotto -->
+        <ImageView
+            android:id="@+id/homeIcon"
+            android:layout_width="34dp"
+            android:layout_height="59dp"
+            android:contentDescription="@null"
+            android:src="@drawable/home"
+            app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+            app:layout_constraintEnd_toStartOf="@+id/shoppingListIcon"
+            app:layout_constraintStart_toEndOf="@+id/search"
+            app:layout_constraintTop_toTopOf="@+id/longRectangle"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/shoppingListIcon"
+            android:layout_width="34dp"
+            android:layout_height="59dp"
+            android:contentDescription="@null"
+            android:src="@drawable/listcart"
+            app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+            app:layout_constraintEnd_toStartOf="@+id/personIcon"
+            app:layout_constraintStart_toEndOf="@+id/homeIcon"
+            app:layout_constraintTop_toTopOf="@+id/longRectangle"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/personIcon"
+            android:layout_width="34dp"
+            android:layout_height="59dp"
+            android:contentDescription="@null"
+            android:src="@drawable/person"
+            app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+            app:layout_constraintEnd_toEndOf="@+id/longRectangle"
+            app:layout_constraintStart_toEndOf="@+id/shoppingListIcon"
+            app:layout_constraintTop_toTopOf="@+id/longRectangle"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/exploreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/relay_inter_bold"
+            android:text="@string/explore"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+            app:layout_constraintEnd_toEndOf="@+id/search"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintStart_toStartOf="@+id/search"
+            app:layout_constraintTop_toTopOf="@+id/search"
+            app:layout_constraintVertical_bias="0.8"
+            tools:ignore="SmallSp" />
+
+        <TextView
+            android:id="@+id/homeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/relay_inter_bold"
+            android:text="@string/home"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+            app:layout_constraintEnd_toEndOf="@+id/homeIcon"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/homeIcon"
+            app:layout_constraintTop_toTopOf="@+id/homeIcon"
+            app:layout_constraintVertical_bias="0.8"
+            tools:ignore="SmallSp" />
+
+        <TextView
+            android:id="@+id/listText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/relay_inter_bold"
+            android:text="@string/list"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+            app:layout_constraintEnd_toEndOf="@+id/shoppingListIcon"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/shoppingListIcon"
+            app:layout_constraintTop_toTopOf="@+id/longRectangle"
+            app:layout_constraintVertical_bias="0.8"
+            tools:ignore="SmallSp" />
+
+        <TextView
+            android:id="@+id/sharedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/relay_inter_bold"
+            android:text="@string/shared"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+            app:layout_constraintEnd_toEndOf="@+id/personIcon"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/personIcon"
+            app:layout_constraintTop_toTopOf="@+id/longRectangle"
+            app:layout_constraintVertical_bias="0.8"
+            tools:ignore="SmallSp" />
+
+
+    Bottoni icone sotto
 
     <Button
         android:id="@+id/button1"
@@ -508,6 +525,27 @@
         app:layout_constraintStart_toStartOf="@+id/personIcon"
         app:layout_constraintTop_toTopOf="@+id/search"
         tools:visibility="invisible" />
+
+        <Button
+        android:id="@+id/button4"
+        android:layout_width="52dp"
+        android:layout_height="65dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/longRectangle"
+        app:layout_constraintEnd_toEndOf="@+id/personIcon"
+        app:layout_constraintStart_toStartOf="@+id/personIcon"
+        app:layout_constraintTop_toTopOf="@+id/search"
+        tools:visibility="invisible" />
+
+    -->
+
+
+
+
+
+
 
     <!-- Fine pulsanti -->
 

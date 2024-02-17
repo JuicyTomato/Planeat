@@ -2,12 +2,16 @@ package com.example.planeat
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,42 +44,62 @@ class MainActivity : AppCompatActivity() {
         val tomorrowDate = calendar.time
         tomorrowDateTextView.text = dateFormat.format(tomorrowDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(tomorrowDate)}"
 
-        //movimento bulb sui bottoni
+
+
+
+
+
+        //movimento bulb sui bottoni (dove necessario) + spostarsi tra activity
         bulbImageView = findViewById(R.id.bulb)
-        val button1 = findViewById<Button>(R.id.button1)
-        val button2 = findViewById<Button>(R.id.button2)
-        val button3 = findViewById<Button>(R.id.button3)
-        val button4 = findViewById<Button>(R.id.button4)
 
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomMenuBar)
+        bottomNavigationView.selectedItemId = R.id.homeIcon
+        bottomNavigationView.setOnItemSelectedListener { item: MenuItem ->
+            when (item.itemId) {
+                R.id.homeIcon -> return@setOnItemSelectedListener true
+                R.id.exploreIcon -> {}
 
+                R.id.shoppingListIcon -> {
 
+                    moveBulbToView(findViewById(R.id.shoppingListIcon))
 
-        //per spostare sopra bulb ai bottoni
-        button1.setOnClickListener {
-            moveBulbToButton(button1)
+                    val intent = Intent(this, ShoppingList::class.java)
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                    //finish()//già presente in onStop()
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.personIcon -> {}
+            }
+            false
         }
-        button2.setOnClickListener {
-            moveBulbToButton(button2)
-        }
-        button3.setOnClickListener {
-            moveBulbToButton(button3)
-            val intent = Intent(this, ShoppingList::class.java)
-            startActivity(intent)
-        }
-        button4.setOnClickListener {
-            moveBulbToButton(button4)
-        }
-
-
 
     }
+
+    //Almeno non rimane aperta sotto consumando risorse... Non ho bisogno di tenerla aperta
+    override fun onStop() {
+        super.onStop()
+        finish()
+    }
+
     //Non serve a nulla, pensa altro modo
     //funzione per spostare bulb sopra ai bottoni
-    private fun moveBulbToButton(button: Button) {
+    /*private fun moveBulbToButton(button: Button) {
         //il 512, penso vada cambiato in base al dispositivo che si utilizza... (anche se aumenti lunghezza long_square)
         val destinationX = button.x + (button.width / 2) - (bulbImageView.width / 2) - 512
         val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", destinationX)
         animator.duration = 500
         animator.start()
+    }*/
+
+    private fun moveBulbToView(view: View) {
+        // Calcola la destinazione X dell'immagine in base al centro della vista
+        val destinationX = view.x + (view.width / 2) - (bulbImageView.width / 2) - 512
+
+        // Crea un animatore per spostare l'immagine alla destinazione X calcolata
+        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", destinationX)
+        animator.duration = 500
+        animator.start()
     }
+
 }
