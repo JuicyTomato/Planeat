@@ -45,10 +45,6 @@ class MainActivity : AppCompatActivity() {
         tomorrowDateTextView.text = dateFormat.format(tomorrowDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(tomorrowDate)}"
 
 
-
-
-
-
         //movimento bulb sui bottoni (dove necessario) + spostarsi tra activity
         bulbImageView = findViewById(R.id.bulb)
 
@@ -72,6 +68,18 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
+
+
+        //bottonefrigo che sposta nell'activity frigo
+        val buttonFridge = findViewById<Button>(R.id.buttonFridge)
+
+        // Animazione per spostare l'ImageView sopra il Button1
+        buttonFridge.setOnClickListener {
+            val intent = Intent(this, ShoppingList::class.java)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
+
+
 
     }
 

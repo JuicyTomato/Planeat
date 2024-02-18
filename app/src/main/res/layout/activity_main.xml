@@ -575,5 +575,15 @@
         app:layout_constraintStart_toStartOf="@+id/defaultSquare2"
         app:layout_constraintTop_toTopOf="@+id/defaultSquare2" />
 
+    <Button
+        android:id="@+id/buttonFridge"
+        android:layout_width="150dp"
+        android:layout_height="72dp"
+        app:layout_constraintBottom_toBottomOf="@+id/smallRectangleHome2"
+        app:layout_constraintEnd_toEndOf="@+id/smallRectangleHome2"
+        app:layout_constraintStart_toStartOf="@+id/smallRectangleHome2"
+        app:layout_constraintTop_toTopOf="@+id/smallRectangleHome2"
+        android:backgroundTint="@android:color/transparent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

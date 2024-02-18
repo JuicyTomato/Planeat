@@ -83,8 +83,6 @@
         app:labelVisibilityMode="labeled"/>
 
 
-    <!-- inizio prova -->
-
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="330dp"
@@ -103,13 +101,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewIngredientsList"
+            <EditText
+                android:id="@+id/editViewIngredientsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/relay_inika_regular"
                 android:textColor="@android:color/white"
                 android:textSize="22sp"
+                android:background="@null"
+                android:focusable="false"
                 app:layout_constraintBottom_toTopOf="@+id/editTextIngredient"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="@+id/textView" />
@@ -132,6 +132,5 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- fine prova -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

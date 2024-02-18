@@ -1,47 +1,35 @@
 package com.example.planeat
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
-import android.text.SpannableStringBuilder
-import android.text.Spanned
 import android.text.TextWatcher
-import android.text.style.BackgroundColorSpan
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class ShoppingList : AppCompatActivity() {
 
     lateinit var bulbImageView: ImageView
-
-    //prova
-
     private lateinit var editTextIngredient: EditText
     private lateinit var textViewIngredientsList: TextView
     private val ingredientsList = mutableListOf<String>()
     private lateinit var linearList: LinearLayout
 
-    //fine prova
 
-
-
-
-
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.shopping_list)
@@ -72,27 +60,26 @@ class ShoppingList : AppCompatActivity() {
             false
         }
 
-
-
         editTextIngredient = findViewById(R.id.editTextIngredient)
-        textViewIngredientsList = findViewById(R.id.textViewIngredientsList)
+        textViewIngredientsList = findViewById(R.id.editViewIngredientsList)
         linearList = findViewById(R.id.linearList)
 
-
-
+        //Quando si preme sulla textView (sulla lista delle parole) esce la tastiera per aggiungere ingredienti
         textViewIngredientsList.setOnClickListener {
             // Imposta un OnClickListener per l'intero layout dell'Activity
-                // Quando l'utente fa clic sullo schermo, seleziona la EditText per l'inserimento
+            // Quando l'utente fa clic sullo schermo, seleziona la EditText per l'inserimento
+            textViewIngredientsList.isFocusableInTouchMode = true
+
             editTextIngredient.requestFocus()
             showKeyboard() // Opzionale: mostra la tastiera virtuale
-
-
-            //inizio prova
-            highlightWord(textViewIngredientsList, editTextIngredient.text.toString())
-            //fine prova
-
         }
 
+        textViewIngredientsList.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                // Salva le modifiche quando si perde il focus dalla textViewIngredientsList
+                saveChangesToIngredientsList()
+            }
+        }
 
         //serve per far in modo che il editText segua la lista
         editTextIngredient.setOnEditorActionListener { _, actionId, _ ->
@@ -100,14 +87,14 @@ class ShoppingList : AppCompatActivity() {
                 addIngredientToList()
                 true
             } else {
-                // Aggiungi un TextWatcher alla EditText per monitorare le modifiche
+                //monitora le modifiche con TextWatcher
                 editTextIngredient.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
                     override fun afterTextChanged(s: Editable?) {
-                        // Aggiorna la TextView con il testo dalla EditText
+                        //aggiorna la editText con il testo dalla editText altra
                         textViewIngredientsList.text = s.toString()
                     }
                 })
@@ -128,19 +115,15 @@ class ShoppingList : AppCompatActivity() {
                     editTextIngredient.hint = getString(R.string.hintEditTextShoppingList)
                 } else {
                     // Se la TextView contiene elementi, rimuovi il testo della hint nella EditText
-                    editTextIngredient.hint = null
+                    editTextIngredient.hint = "add here"
                 }
             }
         })
 
-
-
-
-
     }
 
 
-
+// cambiata in quella sotto...
     private fun addIngredientToList() {
         val ingredientText = editTextIngredient.text.toString().trim()
         if (ingredientText.isNotEmpty()) {
@@ -149,6 +132,32 @@ class ShoppingList : AppCompatActivity() {
             editTextIngredient.text.clear()
         }
     }
+
+
+/*  //Al posto che creare tante edit text per modificare ogni ingrediente (per questione room), dividi tutto il testo e ROOMmizza
+    private fun addIngredientToList() {
+        val ingredientText = editTextIngredient.text.toString().trim()
+        if (ingredientText.isNotEmpty()) {
+            // Creazione dinamica del nuovo EditText
+            val newEditText = EditText(this)
+            newEditText.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            newEditText.setText(ingredientText)
+            linearList.addView(newEditText)
+
+            // Aggiungi l'ingrediente alla lista e aggiorna la TextView
+            ingredientsList.add("• $ingredientText")
+            updateIngredientsTextView()
+
+            // Cancella il testo dalla EditText originale
+            editTextIngredient.text.clear()
+        }
+    }
+
+ */
+
 
     private fun updateIngredientsTextView() {
         val ingredientsText = ingredientsList.joinToString("\n")
@@ -159,39 +168,6 @@ class ShoppingList : AppCompatActivity() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(editTextIngredient, InputMethodManager.SHOW_IMPLICIT)
     }
-
-
-
-    //inizio prova
-
-    private fun highlightWord(textView: TextView, word: String) {
-        val text = textView.text.toString()
-        val spannable = SpannableStringBuilder(text)
-
-        // Cerca la posizione della parola nell'intero testo
-        var startIndex = text.indexOf(word)
-        while (startIndex != -1) {
-            val endIndex = startIndex + word.length
-            // Aggiungi uno Span alla parola per evidenziarla con sfondo blu
-            spannable.setSpan(
-                BackgroundColorSpan(Color.BLUE),
-                startIndex,
-                endIndex,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            // Cerca la successiva occorrenza della parola
-            startIndex = text.indexOf(word, endIndex)
-        }
-
-        // Imposta il testo modificato nella TextView
-        textView.text = spannable
-    }
-
-//fine prova
-
-
-
-
 
 
     //Almeno non rimane aperta sotto consumando risorse... Non ho bisogno di tenerla aperta
@@ -209,6 +185,17 @@ class ShoppingList : AppCompatActivity() {
         val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", destinationX)
         animator.duration = 500
         animator.start()
+    }
+
+
+    private fun saveChangesToIngredientsList() {
+        // Aggiorna la lista degli ingredienti con il testo dalla textViewIngredientsList
+        val text = textViewIngredientsList.text.toString()
+        ingredientsList.clear()
+        ingredientsList.addAll(text.split("\n"))
+        // Aggiorna la textViewIngredientsList
+        val ingredientsText = ingredientsList.joinToString("\n")
+        textViewIngredientsList.text = ingredientsText
     }
 
 }
