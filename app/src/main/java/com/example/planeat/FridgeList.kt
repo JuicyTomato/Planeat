@@ -8,5 +8,6 @@ class FridgeList: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fridge_list)
 
+
     }
 }
