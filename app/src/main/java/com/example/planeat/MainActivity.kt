@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
         // Animazione per spostare l'ImageView sopra il Button1
         buttonFridge.setOnClickListener {
-            val intent = Intent(this, ShoppingList::class.java)
+            val intent = Intent(this, FridgeList::class.java)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 

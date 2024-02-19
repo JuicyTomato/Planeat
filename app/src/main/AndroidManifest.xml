@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ShoppingList" android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".FridgeList" android:exported="true"></activity>
     </application>
 
 </manifest>
