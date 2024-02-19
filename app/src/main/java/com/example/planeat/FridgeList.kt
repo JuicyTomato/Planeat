@@ -10,21 +10,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 
-class FridgeList : ComponentActivity() {    //cambia in: AppCompatActivity() {
+class FridgeList : ComponentActivity() {
 
     private val db by lazy {
         Room.databaseBuilder(
             applicationContext,
-            ContactDatabase::class.java,
-            "Contacts.db"
+            IngredientDatabase::class.java,
+            "Ingredient.db"
         ).build()
     }
 
-    private val viewModel by viewModels<ContactViewModel>(
+    private val viewModel by viewModels<IngredientViewModel>(
         factoryProducer = {
             object : ViewModelProvider.Factory {
                  override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return ContactViewModel(db.dao) as T
+                    return IngredientViewModel(db.dao) as T
                 }
             }
         }
@@ -36,7 +36,7 @@ class FridgeList : ComponentActivity() {    //cambia in: AppCompatActivity() {
         setContent {
             //RoomGuideAndroidTheme {
                 val state by viewModel.state.collectAsState()
-                ContactScreen(state = state, onEvent = viewModel::onEvent)
+                IngredientScreen(state = state, onEvent = viewModel::onEvent)
             //}
         }
 

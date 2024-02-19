@@ -14,46 +14,46 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddContactDialog(
-    state: ContactState,
-    onEvent: (ContactEvent) -> Unit,
+fun AddIngredientDialog(
+    state: IngredientState,
+    onEvent: (IngredientEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     AlertDialog(
         modifier = modifier,
         onDismissRequest = {
-            onEvent(ContactEvent.HideDialog)
+            onEvent(IngredientEvent.HideDialog)
         },
-        title = { Text(text = "Add contact") },
+        title = { Text(text = "Add Ingredient") },
         text = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 TextField(
-                    value = state.firstName,
+                    value = state.ingredientName,
                     onValueChange = {
-                        onEvent(ContactEvent.SetFirstName(it))
+                        onEvent(IngredientEvent.SetIngredientName(it))
                     },
                     placeholder = {
-                        Text(text = "First name")
+                        Text(text = "Ingredient Name")
                     }
                 )
                 TextField(
-                    value = state.lastName,
+                    value = state.expirationDate,
                     onValueChange = {
-                        onEvent(ContactEvent.SetLastName(it))
+                        onEvent(IngredientEvent.SetExpirationDate(it))
                     },
                     placeholder = {
-                        Text(text = "Last name")
+                        Text(text = "Expiration Date")
                     }
                 )
                 TextField(
                     value = state.phoneNumber,
                     onValueChange = {
-                        onEvent(ContactEvent.SetPhoneNumber(it))
+                        onEvent(IngredientEvent.SetPhoneNumber(it))
                     },
                     placeholder = {
-                        Text(text = "Phone number")
+                        Text(text = "ELIMINARE")
                     }
                 )
             }
@@ -64,7 +64,7 @@ fun AddContactDialog(
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Button(onClick = {
-                    onEvent(ContactEvent.SaveContact)
+                    onEvent(IngredientEvent.SaveIngredient)
                 }) {
                     Text(text = "Save")
                 }

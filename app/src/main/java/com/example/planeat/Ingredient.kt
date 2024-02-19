@@ -4,9 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Contact(
-    val firstName: String,
-    val lastName: String,
+data class Ingredient(
+    val ingredientName: String,
+    val expirationDate: String,
+    //elimina numero telefono
     val phoneNumber: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0

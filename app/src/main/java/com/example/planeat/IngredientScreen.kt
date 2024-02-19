@@ -1,6 +1,5 @@
 package com.example.planeat
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -19,24 +18,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ContactScreen(
-    state: ContactState,
-    onEvent: (ContactEvent) -> Unit
+fun IngredientScreen(
+    state: IngredientState,
+    onEvent: (IngredientEvent) -> Unit
 ) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                onEvent(ContactEvent.ShowDialog)
+                onEvent(IngredientEvent.ShowDialog)
             }) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add contact"
+                    contentDescription = "Add Ingredient"
                 )
             }
         },
     ) { _ ->
-        if(state.isAddingContact) {
-            AddContactDialog(state = state, onEvent = onEvent)
+        if(state.isAddingIngredient) {
+            AddIngredientDialog(state = state, onEvent = onEvent)
         }
 
         LazyColumn(
@@ -51,18 +50,18 @@ fun ContactScreen(
                         .horizontalScroll(rememberScrollState()),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    SortType.values().forEach { sortType ->
+                    SortType.entries.forEach { sortType ->
                         Row(
                             modifier = Modifier
                                 .clickable {
-                                    onEvent(ContactEvent.SortContacts(sortType))
+                                    onEvent(IngredientEvent.SortIngredient(sortType))
                                 },
                             verticalAlignment = CenterVertically
                         ) {
                             RadioButton(
                                 selected = state.sortType == sortType,
                                 onClick = {
-                                    onEvent(ContactEvent.SortContacts(sortType))
+                                    onEvent(IngredientEvent.SortIngredient(sortType))
                                 }
                             )
                             Text(text = sortType.name)
@@ -70,7 +69,7 @@ fun ContactScreen(
                     }
                 }
             }
-            items(state.contacts) { contact ->
+            items(state.ingredients) { contact ->
                 Row(
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -78,17 +77,17 @@ fun ContactScreen(
                         modifier = Modifier.weight(1f)
                     ) {
                         Text(
-                            text = "${contact.firstName} ${contact.lastName}",
+                            text = "${contact.ingredientName} ${contact.expirationDate}",
                             fontSize = 20.sp
                         )
                         Text(text = contact.phoneNumber, fontSize = 12.sp)
                     }
                     IconButton(onClick = {
-                        onEvent(ContactEvent.DeleteContact(contact))
+                        onEvent(IngredientEvent.DeleteIngredient(contact))
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete contact"
+                            contentDescription = "Delete Ingredient"
                         )
                     }
                 }
