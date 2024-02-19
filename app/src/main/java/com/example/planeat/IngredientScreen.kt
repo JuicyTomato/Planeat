@@ -80,7 +80,6 @@ fun IngredientScreen(
                             text = "${contact.ingredientName} ${contact.expirationDate}",
                             fontSize = 20.sp
                         )
-                        Text(text = contact.phoneNumber, fontSize = 12.sp)
                     }
                     IconButton(onClick = {
                         onEvent(IngredientEvent.DeleteIngredient(contact))

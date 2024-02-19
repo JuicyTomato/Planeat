@@ -18,6 +18,4 @@ interface IngredientDao {
     @Query("SELECT * FROM ingredient ORDER BY expirationDate ASC")
     fun getIngredientsOrderedByExpirationDate(): Flow<List<Ingredient>>
 
-    @Query("SELECT * FROM ingredient ORDER BY phoneNumber ASC")
-    fun getContactsOrderedByPhoneNumber(): Flow<List<Ingredient>>
 }

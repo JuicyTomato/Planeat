@@ -17,7 +17,6 @@ class IngredientViewModel(
             when(sortType) {
                 SortType.NAME -> dao.getIngredientsOrderedByIngredientsName()
                 SortType.DATE -> dao.getIngredientsOrderedByExpirationDate()
-                SortType.PHONE_NUMBER -> dao.getContactsOrderedByPhoneNumber()
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
@@ -45,16 +44,14 @@ class IngredientViewModel(
             IngredientEvent.SaveIngredient -> {
                 val ingredientName = state.value.ingredientName
                 val expirationDate = state.value.expirationDate
-                val phoneNumber = state.value.phoneNumber
 
-                if(ingredientName.isBlank() || expirationDate.isBlank() || phoneNumber.isBlank()) {
+                if(ingredientName.isBlank() || expirationDate.isBlank()) {
                     return
                 }
 
                 val ingredient = Ingredient(
                     ingredientName = ingredientName,
                     expirationDate = expirationDate,
-                    phoneNumber = phoneNumber
                 )
                 viewModelScope.launch {
                     dao.upsertIngredient(ingredient)
@@ -63,7 +60,6 @@ class IngredientViewModel(
                     isAddingIngredient = false,
                     ingredientName = "",
                     expirationDate = "",
-                    phoneNumber = ""
                 ) }
             }
             is IngredientEvent.SetIngredientName -> {
@@ -74,11 +70,6 @@ class IngredientViewModel(
             is IngredientEvent.SetExpirationDate -> {
                 _state.update { it.copy(
                     expirationDate = event.expirationDate
-                ) }
-            }
-            is IngredientEvent.SetPhoneNumber -> {
-                _state.update { it.copy(
-                    phoneNumber = event.phoneNumber
                 ) }
             }
             IngredientEvent.ShowDialog -> {

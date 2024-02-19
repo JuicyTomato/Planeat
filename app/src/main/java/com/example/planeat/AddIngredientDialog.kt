@@ -47,15 +47,6 @@ fun AddIngredientDialog(
                         Text(text = "Expiration Date")
                     }
                 )
-                TextField(
-                    value = state.phoneNumber,
-                    onValueChange = {
-                        onEvent(IngredientEvent.SetPhoneNumber(it))
-                    },
-                    placeholder = {
-                        Text(text = "ELIMINARE")
-                    }
-                )
             }
         },
         buttons = {

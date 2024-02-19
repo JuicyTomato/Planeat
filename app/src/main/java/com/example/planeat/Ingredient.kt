@@ -8,7 +8,6 @@ data class Ingredient(
     val ingredientName: String,
     val expirationDate: String,
     //elimina numero telefono
-    val phoneNumber: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 )
