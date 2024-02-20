@@ -79,8 +79,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
-
-
     }
 
     //Almeno non rimane aperta sotto consumando risorse... Non ho bisogno di tenerla aperta

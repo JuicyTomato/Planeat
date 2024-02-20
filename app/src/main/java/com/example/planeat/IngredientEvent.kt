@@ -1,4 +1,7 @@
 package com.example.planeat
+
+import android.widget.Button
+
 sealed interface IngredientEvent {
     object SaveIngredient: IngredientEvent
     data class SetIngredientName(val ingredientName: String): IngredientEvent

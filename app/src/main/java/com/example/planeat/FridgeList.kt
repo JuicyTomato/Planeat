@@ -1,5 +1,6 @@
 package com.example.planeat
 
+import android.app.ActivityOptions
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -32,13 +33,16 @@ class FridgeList : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fridge_list)
+        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         setContent {
             //RoomGuideAndroidTheme {
                 val state by viewModel.state.collectAsState()
                 IngredientScreen(state = state, onEvent = viewModel::onEvent)
             //}
         }
-
+    }
+    override fun onStop() {
+        super.onStop()
+        finish()
     }
 }
