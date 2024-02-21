@@ -12,7 +12,7 @@
         android:id="@+id/rectangleHome1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="36dp"
         android:contentDescription="@null"
         android:src="@drawable/rectangle_home"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,11 +24,11 @@
         android:id="@+id/rectangleHome2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:contentDescription="@null"
         android:src="@drawable/rectangle_home"
-        app:layout_constraintBottom_toTopOf="@+id/rectangleHome3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rectangleHome1" />
 
@@ -36,13 +36,13 @@
         android:id="@+id/rectangleHome3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="188dp"
+        android:layout_marginTop="12dp"
         android:contentDescription="@null"
         android:src="@drawable/rectangle_home"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rectangleHome2" />
 
     <ImageView
         android:id="@+id/smallRectangleHome1"
@@ -328,13 +328,12 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginBottom="84dp"
         android:contentDescription="@null"
         android:src="@drawable/bulb"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/bottomMenuBar"
-        app:layout_constraintTop_toBottomOf="@+id/smallRectangleHome1"
-        android:layout_marginStart="130dp"
-        android:layout_marginBottom="77dp"/>
+        app:layout_constraintStart_toStartOf="@+id/bottomMenuBar" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomMenuBar"
@@ -584,6 +583,16 @@
         app:layout_constraintStart_toStartOf="@+id/smallRectangleHome2"
         app:layout_constraintTop_toTopOf="@+id/smallRectangleHome2"
         android:backgroundTint="@android:color/transparent"/>
+
+    <Button
+        android:id="@+id/buttonPlanEats"
+        android:layout_width="150dp"
+        android:layout_height="72dp"
+        android:backgroundTint="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/smallRectangleHome1"
+        app:layout_constraintEnd_toEndOf="@+id/smallRectangleHome1"
+        app:layout_constraintStart_toStartOf="@+id/smallRectangleHome1"
+        app:layout_constraintTop_toTopOf="@+id/smallRectangleHome1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

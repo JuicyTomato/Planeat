@@ -56,11 +56,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.exploreIcon -> {}
 
                 R.id.shoppingListIcon -> {
-                    //moveBulbToView(findViewById(R.id.shoppingListIcon))
-
+                    moveBulbToView(bulbImageView)
                     val intent = Intent(this, ShoppingList::class.java)
                     startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-                    //finish()//già presente in onStop()
+                    //finish()  //già presente in onStop()
                     return@setOnItemSelectedListener true
                 }
 
@@ -70,15 +69,33 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        //bottonefrigo che sposta nell'activity frigo
+        //bottone frigo che sposta nell'activity frigo
         val buttonFridge = findViewById<Button>(R.id.buttonFridge)
 
-        // Animazione per spostare l'ImageView sopra il Button1
         buttonFridge.setOnClickListener {
             val intent = Intent(this, FridgeList::class.java)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
+        //bottone planYourEats che sposta nell'activity PlanYourEats
+        val buttonPlanYourEats = findViewById<Button>(R.id.buttonPlanEats)
+
+        buttonPlanYourEats.setOnClickListener {
+            val intent = Intent(this, PlanYourEats::class.java)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
+
+    }
+
+    //Per movimento bulb... Essendo che si  ricarica anche il menu, non è molto incisivo
+    private fun moveBulbToView(view: View) {
+        //calcola la destinazione X dell'immagine in base al centro della vista
+        val destinationX = view.x + (view.width / 2) - (bulbImageView.width / 2) - 512
+
+        //crea un animatore per spostare l'immagine alla destinazione X calcolata
+        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", -destinationX)
+        animator.duration = 800
+        animator.start()
     }
 
     //Almeno non rimane aperta sotto consumando risorse... Non ho bisogno di tenerla aperta
@@ -87,25 +104,5 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    //Non serve a nulla, pensa altro modo
-    //funzione per spostare bulb sopra ai bottoni
-    /*private fun moveBulbToButton(button: Button) {
-        //il 512, penso vada cambiato in base al dispositivo che si utilizza... (anche se aumenti lunghezza long_square)
-        val destinationX = button.x + (button.width / 2) - (bulbImageView.width / 2) - 512
-        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", destinationX)
-        animator.duration = 500
-        animator.start()
-    }*/
-
-    //Per movimento bulb... Penso che toglierò animazioni e terrò solamente bulb
-    private fun moveBulbToView(view: View) {
-        // Calcola la destinazione X dell'immagine in base al centro della vista
-        val destinationX = view.x + (view.width / 2) - (bulbImageView.width / 2) - 512
-
-        // Crea un animatore per spostare l'immagine alla destinazione X calcolata
-        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", destinationX)
-        animator.duration = 500
-        animator.start()
-    }
 
 }

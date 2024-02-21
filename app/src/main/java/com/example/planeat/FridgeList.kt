@@ -41,6 +41,7 @@ class FridgeList : ComponentActivity() {
             //}
         }
     }
+
     override fun onStop() {
         super.onStop()
         finish()

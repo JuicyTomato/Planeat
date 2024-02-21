@@ -8,4 +8,6 @@
     <string name="shopping_list">Shopping List</string>
     <string name="hintEditTextShoppingList">Do you even need food?</string>
     <string name="myFridge">My Fridge</string>
+    <string name="PreviousButton"><![CDATA[<]]></string>
+    <string name="nextButton"><![CDATA[>]]></string>
 </resources>

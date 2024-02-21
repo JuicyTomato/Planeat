@@ -41,12 +41,13 @@ class ShoppingList : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.homeIcon -> {
-                    //moveBulbToView(findViewById(R.id.homeIcon))
+                    moveBulbToView(bulbImageView)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(
                         intent,
                         ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
                     )
+
                     //finish()//già presente in onStop()
                     return@setOnItemSelectedListener true
                 }
@@ -158,7 +159,6 @@ class ShoppingList : AppCompatActivity() {
 
  */
 
-
     private fun updateIngredientsTextView() {
         val ingredientsText = ingredientsList.joinToString("\n")
         textViewIngredientsList.text = ingredientsText
@@ -169,24 +169,16 @@ class ShoppingList : AppCompatActivity() {
         imm.showSoftInput(editTextIngredient, InputMethodManager.SHOW_IMPLICIT)
     }
 
-
-    //Almeno non rimane aperta sotto consumando risorse... Non ho bisogno di tenerla aperta
-    override fun onStop() {
-        super.onStop()
-        finish()
-    }
-
-    //Per movimento bulb... Penso che toglierò animazioni e terrò solamente bulb
+    //Per movimento bulb... Essendo che si  ricarica anche il menu, non è molto incisivo
     private fun moveBulbToView(view: View) {
         // Calcola la destinazione X dell'immagine in base al centro della vista
         val destinationX = view.x + (view.width / 2) - (bulbImageView.width / 2) - 512
 
         // Crea un animatore per spostare l'immagine alla destinazione X calcolata
-        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", destinationX)
-        animator.duration = 500
+        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", -destinationX)
+        animator.duration = 800
         animator.start()
     }
-
 
     private fun saveChangesToIngredientsList() {
         // Aggiorna la lista degli ingredienti con il testo dalla textViewIngredientsList
@@ -196,6 +188,12 @@ class ShoppingList : AppCompatActivity() {
         // Aggiorna la textViewIngredientsList
         val ingredientsText = ingredientsList.joinToString("\n")
         textViewIngredientsList.text = ingredientsText
+    }
+
+    //Almeno non rimane aperta sotto consumando risorse... Non ho bisogno di tenerla aperta
+    override fun onStop() {
+        super.onStop()
+        finish()
     }
 
 }

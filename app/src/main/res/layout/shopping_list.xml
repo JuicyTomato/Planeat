@@ -56,12 +56,11 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="230dp"
-        android:layout_marginBottom="79dp"
+        android:layout_marginBottom="84dp"
         android:contentDescription="@null"
         android:src="@drawable/bulb"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/bottomMenuBar"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/bottomMenuBar" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomMenuBar"
