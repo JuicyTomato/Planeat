@@ -11,4 +11,5 @@
     <string name="PreviousButton"><![CDATA[<]]></string>
     <string name="nextButton"><![CDATA[>]]></string>
     <string name="groups">groups</string>
+    <string name="calendar">calendar</string>
 </resources>

@@ -7,22 +7,63 @@
     android:background="@color/background"
     tools:context=".Groups">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomMenuBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="547dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/long_rectangle_home"
-        android:contentDescription="@null"
-        app:itemIconSize="35dp"
-        app:itemIconTint="@color/white"
-        app:itemRippleColor="@android:color/transparent"
-        app:itemTextColor="@color/white"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/pulsantone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_bar" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <GridLayout
+            android:id="@+id/griddone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp">
+        </GridLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/pulsantone"
+        android:layout_width="66dp"
+        android:layout_height="67dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/add_group"
+        android:backgroundTint="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomMenuBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+       android:id="@+id/bottomMenuBar"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="10dp"
+       android:background="@drawable/long_rectangle_home"
+       android:contentDescription="@null"
+       app:itemIconSize="35dp"
+       app:itemIconTint="@color/white"
+       app:itemRippleColor="@android:color/transparent"
+       app:itemTextColor="@color/white"
+       app:labelVisibilityMode="labeled"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.506"
+       app:layout_constraintStart_toStartOf="parent"
+       app:menu="@menu/menu_bar" />
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -57,7 +57,13 @@ class ShoppingList : AppCompatActivity() {
                 R.id.shoppingListIcon -> return@setOnItemSelectedListener true
 
                 R.id.personIcon -> {}
-                R.id.groupPeople -> {}
+                R.id.groupPeople -> {
+                    //moveBulbToView(bulbImageView)
+                    val intent = Intent(this, Groups::class.java)
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                    //finish()  //già presente in onStop()
+                    return@setOnItemSelectedListener true
+                }
             }
             false
         }
@@ -173,10 +179,10 @@ class ShoppingList : AppCompatActivity() {
     //Per movimento bulb... Essendo che si  ricarica anche il menu, non è molto incisivo
     private fun moveBulbToView(view: View) {
         // Calcola la destinazione X dell'immagine in base al centro della vista
-        val destinationX = view.x + (view.width / 2) - (bulbImageView.width / 2) - 512
+        val destinationX = view.x + (view.width / 2) - (bulbImageView.width / 2)// - 512
 
         // Crea un animatore per spostare l'immagine alla destinazione X calcolata
-        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", -destinationX)
+        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", destinationX)
         animator.duration = 800
         animator.start()
     }

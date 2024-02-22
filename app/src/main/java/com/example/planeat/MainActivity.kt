@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.SimpleDateFormat
@@ -26,12 +27,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Metti comunque ID come valore univoco, poi estrai con QUERY: data *questa data*, buttami fuori tutto occorrente
         //OGGI TEXT VIEW
         val dateTextView: TextView = findViewById(R.id.dateTextView)
         //formato data
         val dateFormat = SimpleDateFormat("MMM d", Locale.getDefault())
         val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.getDefault())
         val currentDate = Date()    //data di oggi
+
         //metti nella text view
         dateTextView.text = dateFormat.format(currentDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(currentDate)}"
 
@@ -97,10 +100,10 @@ class MainActivity : AppCompatActivity() {
     //Per movimento bulb... Essendo che si  ricarica anche il menu, non è molto incisivo
     private fun moveBulbToView(view: View) {
         //calcola la destinazione X dell'immagine in base al centro della vista
-        val destinationX = view.x + (view.width / 2) - (bulbImageView.width / 2) - 512
+        val destinationX = view.x + (view.width / 2) - (bulbImageView.width / 2)// - 512
 
         //crea un animatore per spostare l'immagine alla destinazione X calcolata
-        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", -destinationX)
+        val animator = ObjectAnimator.ofFloat(bulbImageView, "translationX", destinationX)
         animator.duration = 800
         animator.start()
     }
