@@ -33,4 +33,12 @@
         android:icon="@drawable/person"
         android:title="@string/shared" />
 
+    <item
+        android:id="@+id/groupPeople"
+        android:layout_width="34dp"
+        android:layout_height="59dp"
+        android:contentDescription="@null"
+        android:icon="@drawable/group_peoples"
+        android:title="@string/groups" />
+
 </menu>

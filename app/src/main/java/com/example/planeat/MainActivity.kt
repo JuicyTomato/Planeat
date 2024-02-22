@@ -64,6 +64,13 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.personIcon -> {}
+                R.id.groupPeople -> {
+                    //moveBulbToView(bulbImageView)
+                    val intent = Intent(this, Groups::class.java)
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                    //finish()  //già presente in onStop()
+                    return@setOnItemSelectedListener true
+                }
             }
             false
         }

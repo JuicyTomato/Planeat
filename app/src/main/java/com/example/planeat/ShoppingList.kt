@@ -57,6 +57,7 @@ class ShoppingList : AppCompatActivity() {
                 R.id.shoppingListIcon -> return@setOnItemSelectedListener true
 
                 R.id.personIcon -> {}
+                R.id.groupPeople -> {}
             }
             false
         }

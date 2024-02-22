@@ -30,6 +30,7 @@ class PlanYourEats: AppCompatActivity() {
 
 
 
+        //FAI DIVENTARE DATE COME MENU
         //formato data
         val dateFormat = SimpleDateFormat("MMM d", Locale.getDefault())
         val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.getDefault())
@@ -59,7 +60,7 @@ class PlanYourEats: AppCompatActivity() {
         val fourTextView: TextView = findViewById(R.id.date4)
         fourCalendar.add(Calendar.DAY_OF_YEAR, 3) // Aggiungi un giorno
         val fourDate = fourCalendar.time
-        fourTextView.text = dateFormat.format(fourDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(threeDate)}"
+        fourTextView.text = dateFormat.format(fourDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(fourDate)}"
 
         //+4
         val fiveCalendar = Calendar.getInstance()
@@ -117,7 +118,7 @@ class PlanYourEats: AppCompatActivity() {
             val fourTextView: TextView = findViewById(R.id.date4)
             fourCalendar.add(Calendar.DAY_OF_YEAR, contDate) // Aggiungi un giorno
             val fourDate = fourCalendar.time
-            fourTextView.text = dateFormat.format(fourDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(threeDate)}"
+            fourTextView.text = dateFormat.format(fourDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(fourDate)}"
 
             //V
             val fiveTextView: TextView = findViewById(R.id.date5)
@@ -171,7 +172,7 @@ class PlanYourEats: AppCompatActivity() {
             val fourTextView: TextView = findViewById(R.id.date4)
             fourCalendar.add(Calendar.DAY_OF_YEAR, -contDate) // Aggiungi un giorno
             val fourDate = fourCalendar.time
-            fourTextView.text = dateFormat.format(fourDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(threeDate)}"
+            fourTextView.text = dateFormat.format(fourDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(fourDate)}"
 
             //V
             val fiveTextView: TextView = findViewById(R.id.date5)
