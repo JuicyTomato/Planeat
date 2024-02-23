@@ -19,204 +19,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
 
-    <ImageView
-        android:id="@+id/defaultSquare1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="12dp"
-        android:contentDescription="@null"
-        android:src="@drawable/default_square"
-        app:layout_constraintEnd_toStartOf="@+id/defaultSquare2"
-        app:layout_constraintHorizontal_bias="0.054"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <ImageView
-        android:id="@+id/defaultSquare2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="44dp"
-        android:contentDescription="@null"
-        android:src="@drawable/default_square"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <ImageView
-        android:id="@+id/defaultSquare3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:contentDescription="@null"
-        android:src="@drawable/default_square"
-        app:layout_constraintEnd_toStartOf="@+id/defaultSquare4"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defaultSquare1" />
-
-    <ImageView
-        android:id="@+id/defaultSquare4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="44dp"
-        android:contentDescription="@null"
-        android:src="@drawable/default_square"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defaultSquare2" />
-
-    <ImageView
-        android:id="@+id/defaultSquare5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:contentDescription="@null"
-        android:src="@drawable/default_square"
-        app:layout_constraintEnd_toStartOf="@+id/defaultSquare6"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defaultSquare3" />
-
-    <ImageView
-        android:id="@+id/defaultSquare6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="44dp"
-        android:contentDescription="@null"
-        android:src="@drawable/default_square"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defaultSquare4" />
-
-    <ImageView
-        android:id="@+id/defaultSquare7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:contentDescription="@null"
-        android:src="@drawable/default_square"
-        app:layout_constraintEnd_toStartOf="@+id/defaultSquare8"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defaultSquare5" />
-
-    <ImageView
-        android:id="@+id/defaultSquare8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="44dp"
-        android:contentDescription="@null"
-        android:src="@drawable/default_square"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defaultSquare6" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="45dp"
         android:layout_height="39dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/person_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/defaultSquare7" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/date1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare1"
-        app:layout_constraintEnd_toEndOf="@+id/defaultSquare1"
-        app:layout_constraintStart_toStartOf="@+id/defaultSquare1"
-        app:layout_constraintTop_toTopOf="@+id/defaultSquare1" />
-
-    <TextView
-        android:id="@+id/date2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare2"
-        app:layout_constraintEnd_toEndOf="@+id/defaultSquare2"
-        app:layout_constraintStart_toStartOf="@+id/defaultSquare2"
-        app:layout_constraintTop_toTopOf="@+id/defaultSquare2" />
-
-    <TextView
-        android:id="@+id/date3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare3"
-        app:layout_constraintEnd_toEndOf="@+id/defaultSquare3"
-        app:layout_constraintStart_toStartOf="@+id/defaultSquare3"
-        app:layout_constraintTop_toTopOf="@+id/defaultSquare3" />
-
-    <TextView
-        android:id="@+id/date4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare4"
-        app:layout_constraintEnd_toEndOf="@+id/defaultSquare4"
-        app:layout_constraintStart_toStartOf="@+id/defaultSquare4"
-        app:layout_constraintTop_toTopOf="@+id/defaultSquare4" />
-
-    <TextView
-        android:id="@+id/date5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare5"
-        app:layout_constraintEnd_toEndOf="@+id/defaultSquare5"
-        app:layout_constraintStart_toStartOf="@+id/defaultSquare5"
-        app:layout_constraintTop_toTopOf="@+id/defaultSquare5" />
-
-    <TextView
-        android:id="@+id/date6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare6"
-        app:layout_constraintEnd_toEndOf="@+id/defaultSquare6"
-        app:layout_constraintStart_toStartOf="@+id/defaultSquare6"
-        app:layout_constraintTop_toTopOf="@+id/defaultSquare6" />
-
-    <TextView
-        android:id="@+id/date7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare7"
-        app:layout_constraintEnd_toEndOf="@+id/defaultSquare7"
-        app:layout_constraintStart_toStartOf="@+id/defaultSquare7"
-        app:layout_constraintTop_toTopOf="@+id/defaultSquare7" />
-
-    <TextView
-        android:id="@+id/date8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/relay_inter_bold"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/defaultSquare8"
-        app:layout_constraintEnd_toEndOf="@+id/defaultSquare8"
-        app:layout_constraintStart_toStartOf="@+id/defaultSquare8"
-        app:layout_constraintTop_toTopOf="@+id/defaultSquare8" />
 
     <Button
         android:id="@+id/buttonNext"
@@ -260,6 +73,26 @@
         app:layout_constraintEnd_toStartOf="@+id/buttonNext"
         app:layout_constraintStart_toEndOf="@+id/buttonPreview"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+
+    <GridLayout
+        android:id="@+id/grillNotGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="70dp"
+        android:columnCount="2"
+        android:rowCount="4"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.721">
+
+    </GridLayout>
 
     <ImageView
         android:id="@+id/imageView4"
