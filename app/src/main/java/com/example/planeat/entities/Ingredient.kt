@@ -1,5 +1,6 @@
-package com.example.planeat
+package com.example.planeat.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -7,10 +8,10 @@ import androidx.room.PrimaryKey
 data class Ingredient(
     val ingredientName: String,
     val expirationDate: String,
-    //elimina numero telefono
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 )
+
 
 /*
 @Entity()

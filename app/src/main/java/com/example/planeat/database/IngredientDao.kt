@@ -1,6 +1,7 @@
-package com.example.planeat
+package com.example.planeat.database
 
 import androidx.room.*
+import com.example.planeat.entities.Ingredient
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,5 +1,7 @@
 package com.example.planeat
 
+import com.example.planeat.entities.Ingredient
+
 sealed interface IngredientEvent {
     object SaveIngredient: IngredientEvent
     data class SetIngredientName(val ingredientName: String): IngredientEvent

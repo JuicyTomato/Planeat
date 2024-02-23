@@ -1,7 +1,8 @@
-package com.example.planeat
+package com.example.planeat.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.planeat.entities.Ingredient
 
 @Database(
     entities = [Ingredient::class],

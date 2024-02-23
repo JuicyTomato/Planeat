@@ -17,12 +17,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Groups: AppCompatActivity() {
 
-
-
-
-
-
-
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
