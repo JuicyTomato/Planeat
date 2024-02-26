@@ -12,4 +12,7 @@
     <string name="nextButton"><![CDATA[>]]></string>
     <string name="groups">groups</string>
     <string name="calendar">calendar</string>
+    <string name="dinner">Dinner</string>
+    <string name="launch">Launch</string>
+    <string name="breakfast">Breakfast</string>
 </resources>

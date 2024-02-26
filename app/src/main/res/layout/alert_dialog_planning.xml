@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/transparent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/alert_dialog_background"
+        tools:ignore="UselessParent">
+
+        <!-- Layout orizzontale per i pulsanti -->
+        <LinearLayout
+            android:id="@+id/linearLayoutBig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Meal name"
+                android:fontFamily="@font/relay_inter_bold"
+                android:textColor="@color/textColor"
+                android:layout_marginStart="15dp">
+            </TextView>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Insert here">
+            </EditText>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ingredient List"
+                android:fontFamily="@font/relay_inter_bold"
+                android:textColor="@color/textColor"
+                android:layout_marginStart="15dp">
+
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutAdder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Insert first ingredient">
+                    </EditText>
+                    <EditText
+                        android:id="@+id/ciaone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Insert quantity"
+                        android:layout_gravity="bottom">
+                    </EditText>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Insert first ingredient">
+                    </EditText>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Insert quantity"
+                        android:layout_gravity="bottom">
+                    </EditText>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addIngredientAlert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ Add Ingredient +"
+                android:textColor="@color/textColor"
+                android:background="@android:color/transparent">
+            </Button>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Preparation"
+                android:fontFamily="@font/relay_inter_bold"
+                android:textColor="@color/textColor"
+                android:layout_marginStart="15dp">
+
+            </TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Insert preparation">
+
+            </EditText>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

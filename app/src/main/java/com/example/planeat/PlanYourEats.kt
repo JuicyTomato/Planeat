@@ -80,41 +80,81 @@ class PlanYourEats: AppCompatActivity() {
 
 
 
+        //bottoni + putExtra
         val gridLayout = findViewById<GridLayout>(R.id.grillNotGrid)
         val button = Button(this)
         createButtons(button, updateTextView(oneCalendar, 0))
         gridLayout.addView(button)
+
         button.setOnClickListener{
-            //robe
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(oneCalendar, 0))
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
         val button2 = Button(this)
         createButtons(button2, updateTextView(twoCalendar, 1))
         gridLayout.addView(button2)
 
+        button2.setOnClickListener{
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(twoCalendar, 0))
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
+
         val button3 = Button(this)
         createButtons(button3, updateTextView(threeCalendar, 2))
         gridLayout.addView(button3)
+        button3.setOnClickListener{
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(threeCalendar, 0))
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
 
         val button4 = Button(this)
         createButtons(button4, updateTextView(fourCalendar, 3))
         gridLayout.addView(button4)
+        button4.setOnClickListener{
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(fourCalendar, 0))
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
 
         val button5 = Button(this)
         createButtons(button5, updateTextView(fiveCalendar, 4))
         gridLayout.addView(button5)
+        button5.setOnClickListener{
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(fiveCalendar, 0))
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
 
         val button6 = Button(this)
         createButtons(button6, updateTextView(sixCalendar, 5))
         gridLayout.addView(button6)
+        button6.setOnClickListener{
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(sixCalendar, 0))
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
 
         val button7 = Button(this)
         createButtons(button7, updateTextView(sevenCalendar, 6))
         gridLayout.addView(button7)
+        button7.setOnClickListener{
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(sevenCalendar, 0))
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
 
         val button8 = Button(this)
         createButtons(button8, updateTextView(eightCalendar, 7))
         gridLayout.addView(button8)
+        button8.setOnClickListener{
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(eightCalendar, 0))
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
 
 
 
@@ -210,6 +250,19 @@ class PlanYourEats: AppCompatActivity() {
         return "$formattedDate\n$dayOfWeek"
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun exportDate(
+        calendar: Calendar,
+        contDate: Int
+    ): String {
+        calendar.add(Calendar.DAY_OF_YEAR, contDate)
+        val dateFormat = SimpleDateFormat("MMM d", Locale.getDefault())
+        val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time).uppercase(Locale.getDefault())
+        val dayOfWeek = dayOfWeekFormat.format(calendar.time)
+        return "$formattedDate $dayOfWeek"
+    }
+
     fun updateDateViewText(
         textView: TextView,
         startDate: Calendar,
@@ -221,6 +274,7 @@ class PlanYourEats: AppCompatActivity() {
         textView.text = "$formattedFirstDate - $formattedLastDate"
     }
 
+    //Per salvare stato calendario (se andassi avanti, editassi il giorno e poi ti riporta indietro ad oggi, ma voglio che rimanga al giorno in cui sei andato avanti), usa onSuspend ed onResume... Secondo me potrebbe andare bene
     override fun onStop() {
         super.onStop()
         finish()

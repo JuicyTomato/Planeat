@@ -46,6 +46,22 @@ class MainActivity : AppCompatActivity() {
         val tomorrowDate = calendar.time
         tomorrowDateTextView.text = dateFormat.format(tomorrowDate).uppercase(Locale.getDefault()) + "\n${dayOfWeekFormat.format(tomorrowDate)}"
 
+        //bottoni grossi per planEats
+        val buttonMain1 = findViewById<Button>(R.id.mainSquare1)
+        val buttonMain2 = findViewById<Button>(R.id.mainSquare2)
+
+        buttonMain1.setOnClickListener{
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(calendar, -1))       //-1 perchè prende calendar, che è data di domani
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
+        buttonMain2.setOnClickListener{
+            val intent = Intent(this, PlanningEats::class.java)
+            intent.putExtra("date", exportDate(calendar, 0))
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        }
+
+
 
         //movimento bulb sui bottoni (dove necessario) + spostarsi tra activity
         bulbImageView = findViewById(R.id.bulb)
@@ -111,6 +127,19 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         finish()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun exportDate(
+        calendar: Calendar,
+        contDate: Int
+    ): String {
+        calendar.add(Calendar.DAY_OF_YEAR, contDate)
+        val dateFormat = SimpleDateFormat("MMM d", Locale.getDefault())
+        val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time).uppercase(Locale.getDefault())
+        val dayOfWeek = dayOfWeekFormat.format(calendar.time)
+        return "$formattedDate $dayOfWeek"
     }
 
 

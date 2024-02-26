@@ -25,6 +25,7 @@
         <activity android:name=".FridgeList" android:exported="true"></activity>
         <activity android:name=".PlanYourEats" android:exported="true"></activity>
         <activity android:name=".Groups" android:exported="true"></activity>
+        <activity android:name=".PlanningEats" android:exported="true"></activity>
     </application>
 
 </manifest>

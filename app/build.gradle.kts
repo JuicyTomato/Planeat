@@ -49,18 +49,22 @@ android {
 
 dependencies {
     // Jetpack Compose
-    implementation("androidx.compose.foundation:foundation-layout-android:1.6.1")
-    implementation("androidx.compose.material:material:1.6.1")
-    implementation("androidx.compose.ui:ui:1.6.1")
+    implementation("androidx.compose.foundation:foundation-layout-android:1.6.2")
+    implementation("androidx.compose.material:material:1.6.2")
+    implementation("androidx.compose.ui:ui:1.6.2")
     //Room
     val room_version = "2.6.1"
     implementation("androidx.room:room-ktx:$room_version")
     ksp("androidx.room:room-compiler:$room_version")    //al posto di kapt
 
 
+
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.core:core-ktx:1.12.0")
+    
+    //Builder
     implementation("androidx.appcompat:appcompat:1.6.1")
+
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
