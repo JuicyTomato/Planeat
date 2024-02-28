@@ -1,6 +1,6 @@
 package com.example.planeat
 
-import com.example.planeat.entities.Ingredient
+import com.example.planeat.entities.IngredientFridge
 
 sealed interface IngredientEvent {
     object SaveIngredient: IngredientEvent
@@ -10,5 +10,5 @@ sealed interface IngredientEvent {
     object ShowDialog: IngredientEvent
     object HideDialog: IngredientEvent
     data class SortIngredient(val sortType: SortType): IngredientEvent
-    data class DeleteIngredient(val ingredient: Ingredient): IngredientEvent
+    data class DeleteIngredient(val ingredientFridge: IngredientFridge): IngredientEvent
 }

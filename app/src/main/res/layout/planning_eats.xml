@@ -90,16 +90,18 @@
             android:orientation="vertical"
             android:layout_marginStart="20dp"
             android:clickable="true"
+            android:layout_marginBottom="20dp"
             android:onClick="onClickBreakfast"
             android:focusable="true">
 
             <!-- fallo editable, così la modifica della ricetta la fai tenendo premuto-->
             <TextView
+                android:id="@+id/breakfastID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
                 android:hint="Insert Here"
-                android:textColorHint="@color/textColor"
-                android:layout_marginBottom="20dp">
+                android:textColorHint="@color/textColor">
 
             </TextView>
 
@@ -128,23 +130,20 @@
                 android:orientation="vertical"
                 android:layout_marginStart="20dp"
                 android:clickable="true"
+                android:layout_marginBottom="20dp"
                 android:onClick="onClickLaunch"
                 android:focusable="true">
 
                 <TextView
+                    android:id="@+id/launchID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CIAOO">
+                    android:textSize="18sp"
+                    android:hint="Insert Here"
+                    android:textColorHint="@color/textColor">
 
                 </TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CIAOO"
-                    android:layout_marginBottom="20dp">
-
-                </TextView>
 
             </LinearLayout>
 
@@ -171,13 +170,17 @@
                 android:orientation="vertical"
                 android:layout_marginStart="20dp"
                 android:clickable="true"
+                android:layout_marginBottom="20dp"
                 android:onClick="onClickDinner"
                 android:focusable="true">
 
                 <TextView
+                    android:id="@+id/dinnerID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CIAOO">
+                    android:textSize="18sp"
+                    android:hint="Insert Here"
+                    android:textColorHint="@color/textColor">
 
                 </TextView>
 

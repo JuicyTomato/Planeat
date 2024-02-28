@@ -3,7 +3,7 @@ package com.example.planeat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.planeat.database.IngredientDao
-import com.example.planeat.entities.Ingredient
+import com.example.planeat.entities.IngredientFridge
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -26,7 +26,7 @@ class IngredientViewModel(
     private val _state = MutableStateFlow(IngredientState())
     val state = combine(_state, _sortType, _contacts) { state, sortType, contacts ->
         state.copy(
-            ingredients = contacts,
+            ingredientFridges = contacts,
             sortType = sortType
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), IngredientState())
@@ -35,7 +35,7 @@ class IngredientViewModel(
         when(event) {
             is IngredientEvent.DeleteIngredient -> {
                 viewModelScope.launch {
-                    dao.deleteIngredient(event.ingredient)
+                    dao.deleteIngredient(event.ingredientFridge)
                 }
             }
             IngredientEvent.HideDialog -> {
@@ -51,12 +51,12 @@ class IngredientViewModel(
                     return
                 }
 
-                val ingredient = Ingredient(
+                val ingredientFridge = IngredientFridge(
                     ingredientName = ingredientName,
                     expirationDate = expirationDate,
                 )
                 viewModelScope.launch {
-                    dao.upsertIngredient(ingredient)
+                    dao.upsertIngredient(ingredientFridge)
                 }
                 _state.update { it.copy(
                     isAddingIngredient = false,

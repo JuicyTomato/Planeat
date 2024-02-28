@@ -165,7 +165,7 @@ fun IngredientScreen(
                     }
                 }
             }
-            items(state.ingredients) { contact ->
+            items(state.ingredientFridges) { contact ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -2,10 +2,10 @@ package com.example.planeat.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.planeat.entities.Ingredient
+import com.example.planeat.entities.IngredientFridge
 
 @Database(
-    entities = [Ingredient::class],
+    entities = [IngredientFridge::class],
     version = 1
 )
 abstract class IngredientDatabase: RoomDatabase() {

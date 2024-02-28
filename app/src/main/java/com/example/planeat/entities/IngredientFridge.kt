@@ -1,11 +1,10 @@
 package com.example.planeat.entities
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Ingredient(
+data class IngredientFridge(
     val ingredientName: String,
     val expirationDate: String,
     @PrimaryKey(autoGenerate = true)

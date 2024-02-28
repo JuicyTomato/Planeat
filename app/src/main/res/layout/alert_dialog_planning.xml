@@ -34,6 +34,7 @@
                 android:layout_marginStart="15dp">
             </TextView>
             <EditText
+                android:id="@+id/mealName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Insert here">
@@ -54,42 +55,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Insert first ingredient">
-                    </EditText>
-                    <EditText
-                        android:id="@+id/ciaone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Insert quantity"
-                        android:layout_gravity="bottom">
-                    </EditText>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Insert first ingredient">
-                    </EditText>
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Insert quantity"
-                        android:layout_gravity="bottom">
-                    </EditText>
-                </LinearLayout>
             </LinearLayout>
 
             <Button
@@ -97,8 +62,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="+ Add Ingredient +"
+                android:layout_margin="15dp"
                 android:textColor="@color/textColor"
-                android:background="@android:color/transparent">
+                android:background="@drawable/long_stretch_rectangle">
             </Button>
 
             <TextView

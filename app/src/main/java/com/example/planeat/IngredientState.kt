@@ -1,9 +1,9 @@
 package com.example.planeat
 
-import com.example.planeat.entities.Ingredient
+import com.example.planeat.entities.IngredientFridge
 
 data class IngredientState(
-    val ingredients: List<Ingredient> = emptyList(),
+    val ingredientFridges: List<IngredientFridge> = emptyList(),
     val ingredientName: String = "",
     val expirationDate: String = "",
     val isAddingIngredient: Boolean = false,
