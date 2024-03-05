@@ -1,5 +1,6 @@
-package com.example.planeat
+package com.example.planeat.states
 
+import com.example.planeat.SortType
 import com.example.planeat.entities.IngredientFridge
 
 data class IngredientState(

@@ -21,12 +21,14 @@ class MainActivity : AppCompatActivity() {
     //per la funzione MoveBulbToButton
     lateinit var bulbImageView: ImageView
 
+
+
     @SuppressLint("SetTextI18n", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Metti comunque ID come valore univoco, poi estrai con QUERY: data *questa data*, buttami fuori tutto occorrente
+
         //OGGI TEXT VIEW
         val dateTextView: TextView = findViewById(R.id.dateTextView)
         //formato data

@@ -10,14 +10,54 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
+import com.example.planeat.provaRoom.AppDatabase
+import com.example.planeat.provaRoom.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 class PlanningEats : AppCompatActivity() {
+
+
+
+
+
+//PROVA ROOM        1/2
+
+    // Funzione sospesa per eseguire operazioni di accesso al database
+    suspend fun getUsersFromDatabase(): List<User> {
+        return withContext(Dispatchers.IO) {
+            // Ottieni il DAO (Data Access Object)
+            val userDao = db.userDao()
+
+            // Esegui l'operazione di accesso al database
+            val users: List<User> = userDao.getAll()
+
+            // Restituisci i risultati ottenuti dall'operazione di accesso al database
+            users
+        }
+    }
+
+    private val db by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-name"
+        ).build()
+    }
+
+    //FINE PROVA ROOM
+
+
+
+
     private lateinit var alertDialog: AlertDialog
     private lateinit var viewBLD: TextView
-
+    private lateinit var breakfastID: TextView
     private val editTextPairsList = mutableListOf<Pair<EditText, EditText>>()
     private var mealOutput = StringBuilder()
     private var mealNameText: String = "CIAONE"
@@ -27,23 +67,56 @@ class PlanningEats : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.planning_eats)
 
+
+        //DATABASE
+
+        //Inizio prova Room 2/2
+        //Metti comunque ID come valore univoco, poi estrai con QUERY: data *questa data*, buttami fuori tutto occorrente
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                //db.userDao().insertAll(User(2, "UU", "YEE"))
+            }
+        }
+
+
+
+        //Fine prova Room
+
+
+
         val backButton = findViewById<Button>(R.id.backButton)
 
         val testoRicevuto = intent.getStringExtra("date")
 
         val textView = findViewById<TextView>(R.id.provolone)
-        textView.text = testoRicevuto
+        textView.text = testoRicevuto     //RIMETTILO
+
+
+        //Prova ROOM INIZIO
+        lifecycleScope.launch {
+
+            withContext(Dispatchers.IO) {
+                val users: List<User> = getUsersFromDatabase()
+                val usersText = StringBuilder()
+                for (user in users) {
+                    usersText.append("${user.firstName}\n")
+                    // Se hai altre informazioni sull'utente, puoi aggiungerle qui
+                }
+                // Imposta il testo dell'EditText con la lista degli utenti
+                breakfastID = findViewById<TextView>(R.id.breakfastID)
+                //Fai output da customOutputOnTextView
+                breakfastID.text = usersText.toString()
+            }
+        }
+        //Prova ROOM FINE
+
+
 
         backButton.setOnClickListener {
             val intent = Intent(this, PlanYourEats::class.java)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
-    }
-
-    override fun onStop() {
-        super.onStop()
-        finish()
     }
 
     //funzione da activity, ho messo linearLayout come bottone
@@ -63,6 +136,7 @@ class PlanningEats : AppCompatActivity() {
         showDialog()
     }
 
+    //Ogni volta che si aggiunge un ingrediente, c'è il tasto EDIT.svg che permette di editare la editText
     @SuppressLint("InflateParams")
     fun showDialog() {
 
@@ -126,7 +200,7 @@ class PlanningEats : AppCompatActivity() {
         }
     }
 
-    fun customOutputOnTextView(meal: java.lang.StringBuilder, view: TextView) {
+    private fun customOutputOnTextView(meal: java.lang.StringBuilder, view: TextView) {
 
         mealOutput.append(view.text.toString())
         mealOutput.append("• $mealNameText\n")
@@ -143,6 +217,11 @@ class PlanningEats : AppCompatActivity() {
         mealOutput.append("\n")
         view.text = meal.toString()
         mealOutput.clear()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        finish()
     }
 
 }
