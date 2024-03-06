@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class PlanYourEats: AppCompatActivity() {
@@ -40,7 +39,6 @@ class PlanYourEats: AppCompatActivity() {
         //FAI DIVENTARE DATE COME MENU... Naah, non farlo
         //formato data
         val oneCalendar = Calendar.getInstance()
-
         val oneDate = oneCalendar.time
 
         //+1
@@ -88,7 +86,9 @@ class PlanYourEats: AppCompatActivity() {
 
         button.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
-            intent.putExtra("date", exportDate(oneCalendar, 0))
+            intent.putExtra("date", exportDate(oneCalendar, 0))//per textView
+            //pattern Room è yyyy-MM-dd
+            intent.putExtra("roomDate", roomDate(oneCalendar))          //per Room -> confronta la data con quelle nel DB e butta fuori solo quelle corrispondenti al DB
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -99,6 +99,7 @@ class PlanYourEats: AppCompatActivity() {
         button2.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(twoCalendar, 0))
+            intent.putExtra("roomDate", roomDate(twoCalendar))
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -108,6 +109,7 @@ class PlanYourEats: AppCompatActivity() {
         button3.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(threeCalendar, 0))
+            intent.putExtra("roomDate", roomDate(threeCalendar))
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -117,6 +119,7 @@ class PlanYourEats: AppCompatActivity() {
         button4.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(fourCalendar, 0))
+            intent.putExtra("roomDate", roomDate(fourCalendar))
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -126,6 +129,7 @@ class PlanYourEats: AppCompatActivity() {
         button5.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(fiveCalendar, 0))
+            intent.putExtra("roomDate", roomDate(fiveCalendar))
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -135,6 +139,7 @@ class PlanYourEats: AppCompatActivity() {
         button6.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(sixCalendar, 0))
+            intent.putExtra("roomDate", roomDate(sixCalendar))
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -144,6 +149,7 @@ class PlanYourEats: AppCompatActivity() {
         button7.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(sevenCalendar, 0))
+            intent.putExtra("roomDate", roomDate(sevenCalendar))
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -153,6 +159,7 @@ class PlanYourEats: AppCompatActivity() {
         button8.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(eightCalendar, 0))
+            intent.putExtra("roomDate", roomDate(eightCalendar))
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -250,6 +257,15 @@ class PlanYourEats: AppCompatActivity() {
         return "$formattedDate\n$dayOfWeek"
     }
 
+
+    private fun roomDate(
+        calendar: Calendar
+    ): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(calendar.time).uppercase(Locale.getDefault())
+    }
+
+
     @SuppressLint("SetTextI18n")
     private fun exportDate(
         calendar: Calendar,
@@ -273,6 +289,8 @@ class PlanYourEats: AppCompatActivity() {
         val formattedLastDate = dateFormat.format(lastDate.time).uppercase(Locale.getDefault())
         textView.text = "$formattedFirstDate - $formattedLastDate"
     }
+
+
 
     //Per salvare stato calendario (se andassi avanti, editassi il giorno e poi ti riporta indietro ad oggi, ma voglio che rimanga al giorno in cui sei andato avanti), usa onSuspend ed onResume... Secondo me potrebbe andare bene
     override fun onStop() {

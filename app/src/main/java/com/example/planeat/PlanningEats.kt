@@ -3,7 +3,9 @@ package com.example.planeat
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
@@ -14,11 +16,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import com.example.planeat.provaRoom.AppDatabase
-import com.example.planeat.provaRoom.User
+import com.example.planeat.provaRoom.RecipeDatabase
+import com.example.planeat.provaRoom.Recipe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Date
 
 
 class PlanningEats : AppCompatActivity() {
@@ -30,23 +36,23 @@ class PlanningEats : AppCompatActivity() {
 //PROVA ROOM        1/2
 
     // Funzione sospesa per eseguire operazioni di accesso al database
-    suspend fun getUsersFromDatabase(): List<User> {
+    suspend fun getRecipeFromDatabase(): List<Recipe> {
         return withContext(Dispatchers.IO) {
             // Ottieni il DAO (Data Access Object)
-            val userDao = db.userDao()
+            val recipeDao = db.recipeDao()
 
             // Esegui l'operazione di accesso al database
-            val users: List<User> = userDao.getAll()
+            val recipes: List<Recipe> = recipeDao.getAll()
 
             // Restituisci i risultati ottenuti dall'operazione di accesso al database
-            users
+            recipes
         }
     }
 
     private val db by lazy {
         Room.databaseBuilder(
             applicationContext,
-            AppDatabase::class.java, "database-name"
+            RecipeDatabase::class.java, "database-name"
         ).build()
     }
 
@@ -62,19 +68,31 @@ class PlanningEats : AppCompatActivity() {
     private var mealOutput = StringBuilder()
     private var mealNameText: String = "CIAONE"
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.planning_eats)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val current = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            var answer: String =  current.format(formatter)
+            Log.d("answer",answer)
+        } else {
+            var date = Date()
+            //@SuppressLint("SimpleDateFormat") toglilo in caso dovessi rimuovere else branch
+            val formatter = SimpleDateFormat("MMM dd yyyy")
+            val answer: String = formatter.format(date)
+            Log.d("answer",answer)
+        }
+
 
         //DATABASE
-
         //Inizio prova Room 2/2
         //Metti comunque ID come valore univoco, poi estrai con QUERY: data *questa data*, buttami fuori tutto occorrente
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                //db.userDao().insertAll(User(2, "UU", "YEE"))
+                db.recipeDao().insertAll(Recipe("UU", "YEE"))
             }
         }
 
@@ -89,17 +107,22 @@ class PlanningEats : AppCompatActivity() {
         val testoRicevuto = intent.getStringExtra("date")
 
         val textView = findViewById<TextView>(R.id.provolone)
-        textView.text = testoRicevuto     //RIMETTILO
+        textView.text = testoRicevuto       //Data da conforntare senza giorno settimana ma con anno
+
+        val dateRoom = intent.getStringExtra("roomDate")
+        if (dateRoom != null) {
+            Log.d("roomDate", dateRoom)
+        }
 
 
         //Prova ROOM INIZIO
         lifecycleScope.launch {
 
             withContext(Dispatchers.IO) {
-                val users: List<User> = getUsersFromDatabase()
+                val recipes: List<Recipe> = getRecipeFromDatabase()
                 val usersText = StringBuilder()
-                for (user in users) {
-                    usersText.append("${user.firstName}\n")
+                for (user in recipes) {
+                    usersText.append("${user.recipeName}\n")
                     // Se hai altre informazioni sull'utente, puoi aggiungerle qui
                 }
                 // Imposta il testo dell'EditText con la lista degli utenti

@@ -1,9 +1,34 @@
-package com.example.planeat.entities
+package com.example.planeat.provaRoom
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
+/*  //originale
+@Entity
+data class Recipe(
+    @PrimaryKey val uid: Int,
+    @ColumnInfo(name = "first_name") val firstName: String?,
+    @ColumnInfo(name = "last_name") val lastName: String?,
+)
+*/
+
+@Entity
+class Recipe(
+    @ColumnInfo(name = "recipe_name") val recipeName: String?,
+    @ColumnInfo(name = "process") val process: String?,
+    /*
+    @ColumnInfo(name = "date") val date: String?,
+    @ColumnInfo(name = "position") val position: String
+    */
+){
+    @PrimaryKey(autoGenerate = true) var uid: Int = 0
+
+}
+
+
+/*
 @Entity(tableName = "ricette")
 class Recipe {
     @PrimaryKey(autoGenerate = true)
@@ -24,3 +49,4 @@ class Ingredient {
     private val quantita = 0.0
     private val unitaMisura: String? = null // Getter e Setter
 }
+ */
