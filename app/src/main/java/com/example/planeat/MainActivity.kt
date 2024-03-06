@@ -60,11 +60,13 @@ class MainActivity : AppCompatActivity() {
         buttonMain1.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(calendar, -1))       //-1 perchè prende calendar, che è data di domani
+            intent.putExtra("roomDate", roomDate(calendar))
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
         buttonMain2.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(calendar, 0))
+            intent.putExtra("roomDate", roomDate(calendar))
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -149,5 +151,11 @@ class MainActivity : AppCompatActivity() {
         return "$formattedDate $dayOfWeek"
     }
 
+    private fun roomDate(
+        calendar: Calendar
+    ): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(calendar.time).uppercase(Locale.getDefault())
+    }
 
 }

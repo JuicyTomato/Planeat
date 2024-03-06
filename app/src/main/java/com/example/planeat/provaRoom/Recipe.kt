@@ -18,13 +18,11 @@ data class Recipe(
 class Recipe(
     @ColumnInfo(name = "recipe_name") val recipeName: String?,
     @ColumnInfo(name = "process") val process: String?,
-    /*
     @ColumnInfo(name = "date") val date: String?,
     @ColumnInfo(name = "position") val position: String
-    */
+
 ){
     @PrimaryKey(autoGenerate = true) var uid: Int = 0
-
 }
 
 

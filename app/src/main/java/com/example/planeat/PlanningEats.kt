@@ -33,16 +33,16 @@ class PlanningEats : AppCompatActivity() {
 
 
 
-//PROVA ROOM        1/2
 
     // Funzione sospesa per eseguire operazioni di accesso al database
-    suspend fun getRecipeFromDatabase(): List<Recipe> {
+    suspend fun getRecipeFromDatabase(dateRoom: String): List<Recipe> {
         return withContext(Dispatchers.IO) {
             // Ottieni il DAO (Data Access Object)
             val recipeDao = db.recipeDao()
 
             // Esegui l'operazione di accesso al database
-            val recipes: List<Recipe> = recipeDao.getAll()
+            val recipes: List<Recipe> = recipeDao.getAllWhereDate(dateRoom)
+
 
             // Restituisci i risultati ottenuti dall'operazione di accesso al database
             recipes
@@ -56,49 +56,30 @@ class PlanningEats : AppCompatActivity() {
         ).build()
     }
 
-    //FINE PROVA ROOM
-
 
 
 
     private lateinit var alertDialog: AlertDialog
     private lateinit var viewBLD: TextView
     private lateinit var breakfastID: TextView
+    private lateinit var launchID: TextView
+    private lateinit var dinnerID: TextView
     private val editTextPairsList = mutableListOf<Pair<EditText, EditText>>()
     private var mealOutput = StringBuilder()
-    private var mealNameText: String = "CIAONE"
+    private var mealNameText: String = ""
+    private var mealPreparationText: String = ""
+    private var viewBLDRoom: String = "Breakfast"
+
 
     @SuppressLint("MissingInflatedId", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.planning_eats)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val current = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-            var answer: String =  current.format(formatter)
-            Log.d("answer",answer)
-        } else {
-            var date = Date()
-            //@SuppressLint("SimpleDateFormat") toglilo in caso dovessi rimuovere else branch
-            val formatter = SimpleDateFormat("MMM dd yyyy")
-            val answer: String = formatter.format(date)
-            Log.d("answer",answer)
-        }
-
-
-        //DATABASE
-        //Inizio prova Room 2/2
-        //Metti comunque ID come valore univoco, poi estrai con QUERY: data *questa data*, buttami fuori tutto occorrente
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                db.recipeDao().insertAll(Recipe("UU", "YEE"))
-            }
-        }
 
 
 
-        //Fine prova Room
+
 
 
 
@@ -109,29 +90,41 @@ class PlanningEats : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.provolone)
         textView.text = testoRicevuto       //Data da conforntare senza giorno settimana ma con anno
 
+
+        //ottiene date: String, per WHERE in query (così ottinei cibo per quel giorno)
         val dateRoom = intent.getStringExtra("roomDate")
-        if (dateRoom != null) {
-            Log.d("roomDate", dateRoom)
-        }
 
-
-        //Prova ROOM INIZIO
+        //Penso debba aggiungere questo a: getRecipeFromDatabase(). COsì uno alla volta aggiunte in posizione corretta
+        //riaggiornando variabile viewBLDRoom
         lifecycleScope.launch {
-
             withContext(Dispatchers.IO) {
-                val recipes: List<Recipe> = getRecipeFromDatabase()
-                val usersText = StringBuilder()
-                for (user in recipes) {
-                    usersText.append("${user.recipeName}\n")
-                    // Se hai altre informazioni sull'utente, puoi aggiungerle qui
+                val recipes: List<Recipe> = getRecipeFromDatabase(dateRoom.toString())
+                val recipeText = StringBuilder()
+                for (recipe in recipes) {
+                    recipeText.append("${recipe.recipeName}\n")
+                    //se hai altre informazioni su ricetta, aggiungi qui
                 }
+
                 // Imposta il testo dell'EditText con la lista degli utenti
                 breakfastID = findViewById<TextView>(R.id.breakfastID)
-                //Fai output da customOutputOnTextView
-                breakfastID.text = usersText.toString()
+                launchID = findViewById<TextView>(R.id.launchID)
+                dinnerID = findViewById<TextView>(R.id.dinnerID)
+
+                //usa runOnUiThread, quando vuoi modificare UI
+                runOnUiThread {
+
+                    if(viewBLDRoom == "Breakfast"){
+                        breakfastID.text = recipeText.toString()
+                    } else if(viewBLDRoom == "Launch"){
+                        launchID.text = recipeText.toString()
+                    }else if(viewBLDRoom == "Dinner"){
+                        dinnerID.text = recipeText.toString()
+                    }
+
+                }
+
             }
         }
-        //Prova ROOM FINE
 
 
 
@@ -146,16 +139,19 @@ class PlanningEats : AppCompatActivity() {
 
     fun onClickBreakfast(view: View) {
         viewBLD = findViewById<TextView>(R.id.breakfastID)
+        viewBLDRoom = "Breakfast"
         showDialog()
     }
 
     fun onClickLaunch(view: View) {
         viewBLD = findViewById<TextView>(R.id.launchID)
+        viewBLDRoom = "Launch"
         showDialog()
     }
 
     fun onClickDinner(view: View) {
         viewBLD = findViewById<TextView>(R.id.dinnerID)
+        viewBLDRoom = "Dinner"
         showDialog()
     }
 
@@ -172,8 +168,11 @@ class PlanningEats : AppCompatActivity() {
             val mealNameEditText = alertDialog.findViewById<EditText?>(R.id.mealName)
             mealNameText = mealNameEditText?.text.toString()
 
+            val mealPreparationEditText = alertDialog.findViewById<EditText?>(R.id.mealPreparation)
+            mealPreparationText = mealPreparationEditText?.text.toString()
+
             //chiamata della stampa su textView
-            customOutputOnTextView(mealOutput, viewBLD)
+            customOutputOnTextView(mealOutput, viewBLD, viewBLDRoom)
 
             dialog.dismiss()
         }
@@ -215,15 +214,18 @@ class PlanningEats : AppCompatActivity() {
             val editTextPair = Pair(editText1, editText2)
             editTextPairsList.add(editTextPair)
 
+
             //aggiunge alla view
             linearLayoutAdder?.addView(linearLayout)
             linearLayout.addView(editText1)
             linearLayout.addView(editText2)
 
+
+
         }
     }
 
-    private fun customOutputOnTextView(meal: java.lang.StringBuilder, view: TextView) {
+    private fun customOutputOnTextView(meal: java.lang.StringBuilder, view: TextView, viewBLDRoom: String) {
 
         mealOutput.append(view.text.toString())
         mealOutput.append("• $mealNameText\n")
@@ -238,7 +240,16 @@ class PlanningEats : AppCompatActivity() {
         editTextPairsList.clear()
 
         mealOutput.append("\n")
+        mealOutput.append("Prepataion:\n$mealPreparationText\n")
         view.text = meal.toString()
+
+        //DATABASE
+        lifecycleScope.launch {
+            val dateRoom = intent.getStringExtra("roomDate")
+            withContext(Dispatchers.IO) {
+                db.recipeDao().insertAll(Recipe(mealNameText, mealPreparationText, dateRoom, viewBLDRoom))
+            }
+        }
         mealOutput.clear()
     }
 

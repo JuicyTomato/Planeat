@@ -11,6 +11,9 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe")
     fun getAll(): List<Recipe>
 
+    @Query("SELECT * FROM recipe WHERE date = :type")
+    fun getAllWhereDate(type: String): List<Recipe>
+
     @Query("SELECT * FROM recipe WHERE uid IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<Recipe>
 
