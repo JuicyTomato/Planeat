@@ -1,8 +1,10 @@
 package com.example.planeat.provaRoom
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 
 
 /*  //originale
@@ -22,29 +24,28 @@ class Recipe(
     @ColumnInfo(name = "position") val position: String
 
 ){
-    @PrimaryKey(autoGenerate = true) var uid: Int = 0
+    @PrimaryKey(autoGenerate = true) var uid: Long = 0
+}
+
+@Entity
+class Ingredient(
+
+    @ColumnInfo(name = "name") val nameIngredient: String?,
+    @ColumnInfo(name = "quantity") val quantity: Int?,
+    @ColumnInfo(name = "unity_mes") val unityMes: String?,
+    @ColumnInfo(name = "recipe_id") val recipeID: Long           //foreign key su Recipe su uid (sulla primary key)
+
+){
+    @PrimaryKey(autoGenerate = true) var idR: Long = 0
 }
 
 
-/*
-@Entity(tableName = "ricette")
-class Recipe {
-    @PrimaryKey(autoGenerate = true)
-    private val id = 0
-    private val nome: String? = null
-    private val procedimento: String? = null    // Getter e Setter
-    private val position: String = "Breakfast"  //Se metterlo in breakfast, launch o dinner
-    private val date: String = ""               //where date = dataSelezionata
-}
-
-
-@Entity(tableName = "ingredienti")
-class Ingredient {
-    @PrimaryKey(autoGenerate = true)
-    private val id = 0
-    private val idRicetta = 0 // Chiave esterna
-    private val nome: String? = null
-    private val quantita = 0.0
-    private val unitaMisura: String? = null // Getter e Setter
-}
- */
+//one-to-many relationship
+data class RecipeWithIngredient(
+    @Embedded val recipe: Recipe,
+    @Relation(
+        parentColumn = "uid",
+        entityColumn = "recipe_id"
+    )
+    val ingredients: List<Ingredient>
+)

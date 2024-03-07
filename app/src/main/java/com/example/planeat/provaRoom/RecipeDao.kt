@@ -5,14 +5,21 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 
 @Dao
 interface RecipeDao {
     @Query("SELECT * FROM recipe")
     fun getAll(): List<Recipe>
 
+    @Transaction
+    @Query("SELECT * FROM recipe WHERE date = :type")
+    fun getAllWhereDate(type: String): List<RecipeWithIngredient>
+
+    /*      //before adding @Relation
     @Query("SELECT * FROM recipe WHERE date = :type")
     fun getAllWhereDate(type: String): List<Recipe>
+     */
 
     @Query("SELECT * FROM recipe WHERE uid IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<Recipe>
@@ -22,7 +29,10 @@ interface RecipeDao {
     fun findByName(first: String, last: String): Recipe
 
     @Insert
-    fun insertAll(vararg recipes: Recipe)
+    fun insertAll(recipes: Recipe): Long
+
+    @Insert
+    fun insertIngredient(vararg ingredients:Ingredient)
 
     @Delete
     fun delete(recipe: Recipe)
