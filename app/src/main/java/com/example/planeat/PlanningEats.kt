@@ -32,10 +32,6 @@ import java.util.Date
 class PlanningEats : AppCompatActivity() {
 
 
-
-
-
-
     // Funzione sospesa per eseguire operazioni di accesso al database
     suspend fun getRecipeFromDatabase(dateRoom: String): List<RecipeWithIngredient> {
         return withContext(Dispatchers.IO) {
@@ -57,8 +53,6 @@ class PlanningEats : AppCompatActivity() {
             RecipeDatabase::class.java, "database-name"
         ).build()
     }
-
-
 
 
     private lateinit var alertDialog: AlertDialog
@@ -195,94 +189,72 @@ class PlanningEats : AppCompatActivity() {
             linearLayout.addView(editText2)
 
 
-
         }
     }
 
     //PER AGGIUNGERE
-    private fun customOutputOnTextView(meal: java.lang.StringBuilder, view: TextView, viewBLDRoom: String) {
-
-        /*      //MODIFCALO CIRCA COSI', più ordinato e giusto
-        lifecycleScope.launch {
-    // Inserisci la nuova ricetta nel database e ottieni il suo ID
-    var recipeId = 0L
-    withContext(Dispatchers.IO) {
-        recipeId = db.recipeDao().insertAll(Recipe(mealNameText, mealPreparationText, dateRoom, viewBLDRoom))
-    }
-
-    // Una volta ottenuto l'ID della ricetta, aggiungi gli ingredienti associati
-    addIngredientsToRecipe(recipeId)
-}
-
-// Funzione per aggiungere ingredienti alla ricetta
-suspend fun addIngredientsToRecipe(recipeId: Long) {
-    for (pair in editTextPairsList) {
-        val testoIngredient = pair.first.text.toString()
-        val testoQuantita = pair.second.text.toString()
-
-        // Aggiungi gli ingredienti associati alla ricetta con l'ID corrispondente
-        withContext(Dispatchers.IO) {
-            db.recipeDao().insertIngredient(
-                Ingredient(testoIngredient, testoQuantita.toInt(), "gr", recipeId)
-            )
-        }
-    }
-}
-
-         */
-        var recipeId = 0L
-        //DATABASE
+    private fun customOutputOnTextView(
+        meal: java.lang.StringBuilder,
+        view: TextView,
+        viewBLDRoom: String
+    ) {
         lifecycleScope.launch {
             val dateRoom = intent.getStringExtra("roomDate")
-            //aggiunge ricetta
-            withContext(Dispatchers.IO) {
-                recipeId = db.recipeDao()
-                    .insertAll(Recipe(mealNameText, mealPreparationText, dateRoom, viewBLDRoom))
-            }
-        }
 
+            val recipeId = withContext(Dispatchers.IO) {
+                // Aggiunge la ricetta
+                val insertedRecipeId = db.recipeDao()
+                    .insertAll(Recipe(mealNameText, mealPreparationText, dateRoom, viewBLDRoom))
+
+                // Aggiunge gli ingredienti con l'id della ricetta appena inserita
+                for (pair in editTextPairsList) {
+                    val testoIngredient = pair.first.text.toString()
+                    val testoQuantita = pair.second.text.toString()
+                    db.recipeDao().insertIngredient(
+                        Ingredient(
+                            testoIngredient,
+                            testoQuantita.toInt(),
+                            "gr",
+                            insertedRecipeId
+                        )
+                    )
+                }
+
+                insertedRecipeId
+            }
+
+            // Aggiorna la TextView con i dettagli della ricetta
             runOnUiThread {
                 mealOutput.append(view.text.toString())
                 mealOutput.append("\n• $mealNameText\n")
-            }
 
-            for (pair in editTextPairsList) {
+                for (pair in editTextPairsList) {
                     val testoIngredient = pair.first.text.toString()
                     val testoQuantita = pair.second.text.toString()
-
-                //aggiunge ingredienti con id corrispondente alla ricetta
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        db.recipeDao().insertIngredient(
-                            Ingredient(
-                                testoIngredient,
-                                testoQuantita.toInt(),
-                                "gr",
-                                recipeId
-                            )
-                        )
-                    }
+                    mealOutput.append("\t\t- $testoIngredient")
+                    mealOutput.append(" ")
+                    mealOutput.append(testoQuantita + "\n")
                 }
-                mealOutput.append("\t\t- $testoIngredient")
-                mealOutput.append(" ")
-                mealOutput.append(testoQuantita + "\n")
 
+                mealOutput.append("\nPreparation:\n$mealPreparationText\n")
+                view.text = meal.toString()
             }
 
-
-        editTextPairsList.clear()
-
-        mealOutput.append("\n")
-        mealOutput.append("Preparation:\n$mealPreparationText\n")
-        view.text = meal.toString()
-
-
+            // Pulisce la lista degli ingredienti
+            editTextPairsList.clear()
+        }
         mealOutput.clear()
     }
 
+
     //in base alla "posizione" delle ricette, vengono aggiunti nella editText corretta
-    private fun showRecipesByPosition(recipes: List<RecipeWithIngredient>, position: String, textView: TextView) {
-        val filteredRecipes = recipes.filter { it.recipe.position.equals(position, ignoreCase = true) }
+    private fun showRecipesByPosition(
+        recipes: List<RecipeWithIngredient>,
+        position: String,
+        textView: TextView
+    ) {
+        val filteredRecipes =
+            recipes.filter { it.recipe.position.equals(position, ignoreCase = true) }
         val recipeText = StringBuilder()
 
         for (recipeWithIngredient in filteredRecipes) {
