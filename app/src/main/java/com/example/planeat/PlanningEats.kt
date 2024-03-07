@@ -3,13 +3,13 @@ package com.example.planeat
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -23,10 +23,6 @@ import com.example.planeat.provaRoom.RecipeWithIngredient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Date
 
 
 class PlanningEats : AppCompatActivity() {
@@ -54,6 +50,7 @@ class PlanningEats : AppCompatActivity() {
         ).build()
     }
 
+    private var starState = false
 
     private lateinit var alertDialog: AlertDialog
     private lateinit var viewBLD: TextView
@@ -71,6 +68,20 @@ class PlanningEats : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.planning_eats)
+
+
+        val star = findViewById<ImageView>(R.id.star)
+        star.setOnClickListener {
+            starState = if(starState) {
+                star.setImageResource(R.drawable.star_gray)
+                false
+            } else {
+                star.setImageResource(R.drawable.star_gold)
+                true
+            }
+        }
+
+
 
         val backButton = findViewById<Button>(R.id.backButton)
 
