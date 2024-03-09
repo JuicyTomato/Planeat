@@ -3,20 +3,23 @@ package com.example.planeat
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.LocalDate
 import java.util.*
 
 
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +74,42 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
+
+        val seDateTextView = findViewById<TextView>(R.id.seDateTextView)
+
+        val context: Context = applicationContext
+
+        val stringListManager = StringListManager(context)
+        val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
+        var nearestFutureDate: String? = null
+        // Raccogli il flusso dei dati solo una volta
+        lifecycleScope.launch {
+            stringListFlow.collect { stringList ->
+                val sortedStringList = stringList.sorted()
+                for (date in sortedStringList) {
+                    if (date >= LocalDate.now().toString()) {
+                        nearestFutureDate = date
+                        break
+                    }
+
+                }
+                runOnUiThread {
+                    seDateTextView.text = formatDateMain(nearestFutureDate) ?: "No event"
+                }
+            }
+        }
+
+        //bottone se_square
+        val seSquare = findViewById<Button>(R.id.seSquare)
+        seSquare.setOnClickListener {
+            //se non ci fossero eventi speciali
+            if(seDateTextView.text != "No event") {
+                val intent = Intent(this, PlanningEats::class.java)
+                intent.putExtra("date", formatDate(nearestFutureDate))   //exportDate(calendar, 0)
+                intent.putExtra("roomDate", nearestFutureDate)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            }
+        }
 
 
         //movimento bulb sui bottoni (dove necessario) + spostarsi tra activity
@@ -136,6 +176,36 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         finish()
+    }
+
+    //funzione che modifica il giorno yyyy-MM-dd in JUN 15 martedì
+    private fun formatDate(dateString: String?): String? {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
+
+        val date = dateString?.let { inputFormat.parse(it) } ?: return null
+
+        val calendar = Calendar.getInstance().apply {
+            time = date
+        }
+        val dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+
+        return "${outputFormat.format(date).uppercase()} $dayOfWeek"
+    }
+
+    //(cambia solo \n) cagata, lo so, ma almeno viene visualizzato correttamewnte nella mainActivity
+    private fun formatDateMain(dateString: String?): String? {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
+
+        val date = dateString?.let { inputFormat.parse(it) } ?: return null
+
+        val calendar = Calendar.getInstance().apply {
+            time = date
+        }
+        val dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+
+        return "${outputFormat.format(date).uppercase()} \n$dayOfWeek"
     }
 
     @SuppressLint("SetTextI18n")

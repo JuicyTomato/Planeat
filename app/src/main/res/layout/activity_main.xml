@@ -142,6 +142,17 @@
         app:layout_constraintTop_toTopOf="@+id/rectangleHome3"
         app:layout_constraintVertical_bias="0.5" />
 
+    <Button
+        android:id="@+id/seSquare"
+        android:layout_width="143dp"
+        android:layout_height="132dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/seSquare1"
+        app:layout_constraintEnd_toEndOf="@+id/seSquare1"
+        app:layout_constraintStart_toStartOf="@+id/seSquare1"
+        app:layout_constraintTop_toTopOf="@+id/seSquare1">
+    </Button>
+
 
     <ImageView
         android:id="@+id/TODAY"
@@ -597,6 +608,21 @@
         app:layout_constraintEnd_toEndOf="@+id/defaultSquare2"
         app:layout_constraintStart_toStartOf="@+id/defaultSquare2"
         app:layout_constraintTop_toTopOf="@+id/defaultSquare2" />
+
+    <TextView
+        android:id="@+id/seDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/relay_inter_bold"
+        android:textColor="@color/se"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/SPECIALEVENT"
+        app:layout_constraintEnd_toEndOf="@+id/seSquare1"
+        app:layout_constraintStart_toStartOf="@+id/seSquare1"
+        app:layout_constraintTop_toTopOf="@+id/seSquare1">
+
+    </TextView>
 
     <Button
         android:id="@+id/buttonFridge"

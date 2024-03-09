@@ -230,8 +230,6 @@ class PlanYourEats: AppCompatActivity() {
         }
 
 
-
-
         //torna alla MainActivity
         backButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -249,30 +247,6 @@ class PlanYourEats: AppCompatActivity() {
             setMargins(25, 25, 25, 25) // Imposta i margini del pulsante
         }
 
-        /*
-                //colora di rosso (se_square), solo se la data è nella lista di storeData
-                lifecycleScope.launch {
-                    stringListFlow.collect { stringList ->
-                        stringList.forEach { string ->
-                            when (string) {
-                                oneRoom -> Log.d("DARE", "Elemento trovato: $oneRoom - $string")
-                                twoRoom -> Log.d("DARE","Elemento trovato: two")
-                                threeRoom -> Log.d("DARE","Elemento trovato: three")
-                                fourRoom -> Log.d("DARE","Elemento trovato: four")
-                                fiveRoom -> Log.d("DARE","Elemento trovato: five")
-                                sixRoom -> Log.d("DARE","Elemento trovato: six")
-                                sevenRoom -> Log.d("DARE","Elemento trovato: seven")
-                                eightRoom -> Log.d("DARE","Elemento trovato: eight")
-                                else -> {
-                                    Log.d("DARE","Elemento trovato: NESSUNo $string")
-                                }
-                            }
-                        }
-                    }
-                }
-
-         */
-        //INIZIO
 
         //ottieni il contesto dall'Activity, dal Fragment o da qualsiasi altro contesto
         val context: Context = applicationContext
@@ -280,7 +254,7 @@ class PlanYourEats: AppCompatActivity() {
         val stringListManager = StringListManager(context)
         val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
 
-        // Aggiungi un listener per osservare la lista di stringhe
+        //cambia colore al quadrante
         lifecycleScope.launch {
             stringListFlow.collect { stringList ->
                 // Verifica se la lista contiene la data
@@ -293,14 +267,6 @@ class PlanYourEats: AppCompatActivity() {
         }
 
         button.text = text
-
-/*
-        val icon = ContextCompat.getDrawable(this, R.drawable.default_square)
-        //val icon = ContextCompat.getDrawable(this, R.drawable.se_square)
-        button.background = icon
-        button.text = text
-
- */
     }
 
     @SuppressLint("SetTextI18n")

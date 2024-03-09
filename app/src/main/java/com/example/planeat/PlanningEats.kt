@@ -78,39 +78,12 @@ class PlanningEats : AppCompatActivity() {
         //ottiene date: String, per WHERE in query (così ottinei cibo per quel giorno)
         //Messo in alto così preso anche da storeData
         val dateRoom = intent.getStringExtra("roomDate")
-        Log.d("DATA", "ROOM E': $dateRoom")
-
-
-
-
-
-        //INIZIO
 
         //ottieni il contesto dall'Activity, dal Fragment o da qualsiasi altro contesto
         val context: Context = applicationContext
 
         val stringListManager = StringListManager(context)
         val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
-
-/*
-        val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
-
-        //cambiamenti
-        stringListFlow.collect { stringList ->
-            stringList.forEach { string ->
-                Log.d("lista", string)
-                if (string == "ciaone") {
-                    println("Elemento trovato: ciaone")
-                }
-            }
-        }
-
- */
-
-
-        //FINE
-
-
 
         val star = findViewById<ImageView>(R.id.star)
 
@@ -141,25 +114,12 @@ class PlanningEats : AppCompatActivity() {
             lifecycleScope.launch {
                 val dateRoomString = dateRoom.toString()
                 if (starState) {
-                    Log.d("DATA", "AAGIUNTO $dateRoomString")
                     stringListManager.addStringToList(dateRoomString)
                 } else {
-                    Log.d("DATA", "TOLTO $dateRoomString")
                     stringListManager.removeStringFromList(dateRoomString)
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
 
         val backButton = findViewById<Button>(R.id.backButton)
 
