@@ -68,6 +68,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.core:core-ktx:1.12.0")
 
+    //DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     //Builder
     implementation("androidx.appcompat:appcompat:1.6.1")
 

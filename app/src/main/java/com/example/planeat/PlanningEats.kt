@@ -2,6 +2,7 @@ package com.example.planeat
 
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.example.planeat.provaRoom.Ingredient
@@ -21,8 +24,10 @@ import com.example.planeat.provaRoom.RecipeDatabase
 import com.example.planeat.provaRoom.Recipe
 import com.example.planeat.provaRoom.RecipeWithIngredient
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.prefs.Preferences
 
 
 class PlanningEats : AppCompatActivity() {
@@ -64,22 +69,95 @@ class PlanningEats : AppCompatActivity() {
     private var viewBLDRoom: String = "Breakfast"
 
 
+
     @SuppressLint("MissingInflatedId", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.planning_eats)
 
+        //ottiene date: String, per WHERE in query (così ottinei cibo per quel giorno)
+        //Messo in alto così preso anche da storeData
+        val dateRoom = intent.getStringExtra("roomDate")
+        Log.d("DATA", "ROOM E': $dateRoom")
 
-        val star = findViewById<ImageView>(R.id.star)
-        star.setOnClickListener {
-            starState = if(starState) {
-                star.setImageResource(R.drawable.star_gray)
-                false
-            } else {
-                star.setImageResource(R.drawable.star_gold)
-                true
+
+
+
+
+        //INIZIO
+
+        //ottieni il contesto dall'Activity, dal Fragment o da qualsiasi altro contesto
+        val context: Context = applicationContext
+
+        val stringListManager = StringListManager(context)
+        val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
+
+/*
+        val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
+
+        //cambiamenti
+        stringListFlow.collect { stringList ->
+            stringList.forEach { string ->
+                Log.d("lista", string)
+                if (string == "ciaone") {
+                    println("Elemento trovato: ciaone")
+                }
             }
         }
+
+ */
+
+
+        //FINE
+
+
+
+        val star = findViewById<ImageView>(R.id.star)
+
+        // Raccogli il flusso dei dati solo una volta
+        lifecycleScope.launch {
+            stringListFlow.collect { stringList ->
+                val dateInList = stringList.contains(dateRoom)
+                if(dateInList){
+                    star.setImageResource(R.drawable.star_gold)
+                    starState = true
+                }
+            }
+        }
+
+        star.setOnClickListener {
+            //in base allo stato cambia immagine
+            if(starState){
+                star.setImageResource(R.drawable.star_gray)
+            } else {
+                star.setImageResource(R.drawable.star_gold)
+            }
+
+            //inverti stato
+            starState = !starState
+
+
+            //aggiungi o rimuovi dalla lista la data
+            lifecycleScope.launch {
+                val dateRoomString = dateRoom.toString()
+                if (starState) {
+                    Log.d("DATA", "AAGIUNTO $dateRoomString")
+                    stringListManager.addStringToList(dateRoomString)
+                } else {
+                    Log.d("DATA", "TOLTO $dateRoomString")
+                    stringListManager.removeStringFromList(dateRoomString)
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -90,9 +168,6 @@ class PlanningEats : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.provolone)
         textView.text = testoRicevuto       //Data da conforntare senza giorno settimana ma con anno
 
-
-        //ottiene date: String, per WHERE in query (così ottinei cibo per quel giorno)
-        val dateRoom = intent.getStringExtra("roomDate")
 
         //per visualizzare ricette nella corretta editText
         lifecycleScope.launch {
@@ -113,8 +188,6 @@ class PlanningEats : AppCompatActivity() {
         }
 
     }
-
-    //funzione da activity, ho messo linearLayout come bottone
 
     fun onClickBreakfast(view: View) {
         viewBLD = findViewById<TextView>(R.id.breakfastID)
@@ -256,7 +329,6 @@ class PlanningEats : AppCompatActivity() {
         }
         mealOutput.clear()
     }
-
 
     //in base alla "posizione" delle ricette, vengono aggiunti nella editText corretta
     private fun showRecipesByPosition(

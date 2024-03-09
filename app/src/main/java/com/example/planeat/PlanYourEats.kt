@@ -2,14 +2,19 @@ package com.example.planeat
 
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -18,7 +23,6 @@ class PlanYourEats: AppCompatActivity() {
     private lateinit var buttonNext: Button
     private lateinit var buttonPreview: Button
     private var contDate: Int = 8
-
 
     @SuppressLint("SetTextI18n", "CutPasteId", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,19 +85,19 @@ class PlanYourEats: AppCompatActivity() {
         //bottoni + putExtra
         val gridLayout = findViewById<GridLayout>(R.id.grillNotGrid)
         val button = Button(this)
-        createButtons(button, updateTextView(oneCalendar, 0))
+        createButtons(button, updateTextView(oneCalendar, 0), roomDate(oneCalendar))
         gridLayout.addView(button)
 
         button.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(oneCalendar, 0))//per textView
             //pattern Room è yyyy-MM-dd
-            intent.putExtra("roomDate", roomDate(oneCalendar))          //per Room -> confronta la data con quelle nel DB e butta fuori solo quelle corrispondenti al DB
+            intent.putExtra("roomDate", roomDate(oneCalendar))         //per Room -> confronta la data con quelle nel DB e butta fuori solo quelle corrispondenti al DB
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
         val button2 = Button(this)
-        createButtons(button2, updateTextView(twoCalendar, 1))
+        createButtons(button2, updateTextView(twoCalendar, 1), roomDate(twoCalendar))
         gridLayout.addView(button2)
 
         button2.setOnClickListener{
@@ -104,8 +108,9 @@ class PlanYourEats: AppCompatActivity() {
         }
 
         val button3 = Button(this)
-        createButtons(button3, updateTextView(threeCalendar, 2))
+        createButtons(button3, updateTextView(threeCalendar, 2), roomDate(threeCalendar))
         gridLayout.addView(button3)
+
         button3.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(threeCalendar, 0))
@@ -114,8 +119,9 @@ class PlanYourEats: AppCompatActivity() {
         }
 
         val button4 = Button(this)
-        createButtons(button4, updateTextView(fourCalendar, 3))
+        createButtons(button4, updateTextView(fourCalendar, 3), roomDate(fourCalendar))
         gridLayout.addView(button4)
+
         button4.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(fourCalendar, 0))
@@ -124,8 +130,9 @@ class PlanYourEats: AppCompatActivity() {
         }
 
         val button5 = Button(this)
-        createButtons(button5, updateTextView(fiveCalendar, 4))
+        createButtons(button5, updateTextView(fiveCalendar, 4), roomDate(fiveCalendar))
         gridLayout.addView(button5)
+
         button5.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(fiveCalendar, 0))
@@ -134,8 +141,9 @@ class PlanYourEats: AppCompatActivity() {
         }
 
         val button6 = Button(this)
-        createButtons(button6, updateTextView(sixCalendar, 5))
+        createButtons(button6, updateTextView(sixCalendar, 5), roomDate(sixCalendar))
         gridLayout.addView(button6)
+
         button6.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(sixCalendar, 0))
@@ -144,8 +152,9 @@ class PlanYourEats: AppCompatActivity() {
         }
 
         val button7 = Button(this)
-        createButtons(button7, updateTextView(sevenCalendar, 6))
+        createButtons(button7, updateTextView(sevenCalendar, 6), roomDate(sevenCalendar))
         gridLayout.addView(button7)
+
         button7.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(sevenCalendar, 0))
@@ -154,8 +163,9 @@ class PlanYourEats: AppCompatActivity() {
         }
 
         val button8 = Button(this)
-        createButtons(button8, updateTextView(eightCalendar, 7))
+        createButtons(button8, updateTextView(eightCalendar, 7), roomDate(eightCalendar))
         gridLayout.addView(button8)
+
         button8.setOnClickListener{
             val intent = Intent(this, PlanningEats::class.java)
             intent.putExtra("date", exportDate(eightCalendar, 0))
@@ -176,21 +186,21 @@ class PlanYourEats: AppCompatActivity() {
             */
 
             //I
-            createButtons(button, updateTextView(oneCalendar, contDate))
+            createButtons(button, updateTextView(oneCalendar, contDate), roomDate(oneCalendar))
             //II
-            createButtons(button2, updateTextView(twoCalendar, contDate))
+            createButtons(button2, updateTextView(twoCalendar, contDate), roomDate(twoCalendar))
             //III
-            createButtons(button3, updateTextView(threeCalendar, contDate))
+            createButtons(button3, updateTextView(threeCalendar, contDate), roomDate(threeCalendar))
             //IV
-            createButtons(button4, updateTextView(fourCalendar, contDate))
+            createButtons(button4, updateTextView(fourCalendar, contDate), roomDate(fourCalendar))
             //V
-            createButtons(button5, updateTextView(fiveCalendar, contDate))
+            createButtons(button5, updateTextView(fiveCalendar, contDate), roomDate(fiveCalendar))
             //VI
-            createButtons(button6, updateTextView(sixCalendar, contDate))
+            createButtons(button6, updateTextView(sixCalendar, contDate), roomDate(sixCalendar))
             //VII
-            createButtons(button7, updateTextView(sevenCalendar, contDate))
+            createButtons(button7, updateTextView(sevenCalendar, contDate), roomDate(sevenCalendar))
             //VIII
-            createButtons(button8, updateTextView(eightCalendar, contDate))
+            createButtons(button8, updateTextView(eightCalendar, contDate), roomDate(eightCalendar))
 
             //barra sopra
             updateDateViewText(dateViewText, oneCalendar, eightCalendar)
@@ -198,21 +208,21 @@ class PlanYourEats: AppCompatActivity() {
         //Bottone per tornare indietro agli scorsi 8 giorni
         buttonPreview.setOnClickListener {
             //I
-            createButtons(button, updateTextView(oneCalendar, -contDate))
+            createButtons(button, updateTextView(oneCalendar, -contDate), roomDate(oneCalendar))
             //II
-            createButtons(button2, updateTextView(twoCalendar, -contDate))
+            createButtons(button2, updateTextView(twoCalendar, -contDate), roomDate(twoCalendar))
             //III
-            createButtons(button3, updateTextView(threeCalendar, -contDate))
+            createButtons(button3, updateTextView(threeCalendar, -contDate), roomDate(threeCalendar))
             //IV
-            createButtons(button4, updateTextView(fourCalendar, -contDate))
+            createButtons(button4, updateTextView(fourCalendar, -contDate), roomDate(fourCalendar))
             //V
-            createButtons(button5, updateTextView(fiveCalendar, -contDate))
+            createButtons(button5, updateTextView(fiveCalendar, -contDate), roomDate(fiveCalendar))
             //VI
-            createButtons(button6, updateTextView(sixCalendar, -contDate))
+            createButtons(button6, updateTextView(sixCalendar, -contDate), roomDate(sixCalendar))
             //VII
-            createButtons(button7, updateTextView(sevenCalendar, -contDate))
+            createButtons(button7, updateTextView(sevenCalendar, -contDate), roomDate(sevenCalendar))
             //VIII
-            createButtons(button8, updateTextView(eightCalendar, -contDate))
+            createButtons(button8, updateTextView(eightCalendar, -contDate), roomDate(eightCalendar))
 
             //barra sopra
             updateDateViewText(dateViewText, oneCalendar, eightCalendar)
@@ -229,8 +239,7 @@ class PlanYourEats: AppCompatActivity() {
         }
 
     }
-
-    private fun createButtons(button: Button, text: String){
+    private fun createButtons(button: Button, text: String, date: String){
         button.id = View.generateViewId()
         button.layoutParams = GridLayout.LayoutParams().apply {
             width = GridLayout.LayoutParams.WRAP_CONTENT
@@ -239,9 +248,59 @@ class PlanYourEats: AppCompatActivity() {
             rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
             setMargins(25, 25, 25, 25) // Imposta i margini del pulsante
         }
+
+        /*
+                //colora di rosso (se_square), solo se la data è nella lista di storeData
+                lifecycleScope.launch {
+                    stringListFlow.collect { stringList ->
+                        stringList.forEach { string ->
+                            when (string) {
+                                oneRoom -> Log.d("DARE", "Elemento trovato: $oneRoom - $string")
+                                twoRoom -> Log.d("DARE","Elemento trovato: two")
+                                threeRoom -> Log.d("DARE","Elemento trovato: three")
+                                fourRoom -> Log.d("DARE","Elemento trovato: four")
+                                fiveRoom -> Log.d("DARE","Elemento trovato: five")
+                                sixRoom -> Log.d("DARE","Elemento trovato: six")
+                                sevenRoom -> Log.d("DARE","Elemento trovato: seven")
+                                eightRoom -> Log.d("DARE","Elemento trovato: eight")
+                                else -> {
+                                    Log.d("DARE","Elemento trovato: NESSUNo $string")
+                                }
+                            }
+                        }
+                    }
+                }
+
+         */
+        //INIZIO
+
+        //ottieni il contesto dall'Activity, dal Fragment o da qualsiasi altro contesto
+        val context: Context = applicationContext
+
+        val stringListManager = StringListManager(context)
+        val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
+
+        // Aggiungi un listener per osservare la lista di stringhe
+        lifecycleScope.launch {
+            stringListFlow.collect { stringList ->
+                // Verifica se la lista contiene la data
+                val dateInList = stringList.contains(date)
+                // Se la data è presente nella lista, imposta l'icona a R.drawable.se_square, altrimenti a R.drawable.default_square
+                val iconResource = if (dateInList) R.drawable.se_square else R.drawable.default_square
+                val icon = ContextCompat.getDrawable(this@PlanYourEats, iconResource)
+                button.background = icon
+            }
+        }
+
+        button.text = text
+
+/*
         val icon = ContextCompat.getDrawable(this, R.drawable.default_square)
+        //val icon = ContextCompat.getDrawable(this, R.drawable.se_square)
         button.background = icon
         button.text = text
+
+ */
     }
 
     @SuppressLint("SetTextI18n")
@@ -279,6 +338,7 @@ class PlanYourEats: AppCompatActivity() {
         return "$formattedDate $dayOfWeek"
     }
 
+    @SuppressLint("SetTextI18n")
     fun updateDateViewText(
         textView: TextView,
         startDate: Calendar,
