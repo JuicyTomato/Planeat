@@ -1,4 +1,4 @@
-package com.example.planeat
+package com.example.planeat.menus
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -17,7 +17,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import com.example.planeat.MainActivity
+import com.example.planeat.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

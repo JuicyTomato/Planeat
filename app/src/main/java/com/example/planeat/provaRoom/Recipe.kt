@@ -22,6 +22,8 @@ class Recipe(
     @ColumnInfo(name = "process") val process: String?,
     @ColumnInfo(name = "date") val date: String?,
     @ColumnInfo(name = "position") val position: String
+    //    @ColumnInfo(name = "starred") val starred: Boolean     //se è nelle ricette salvate
+    //    @ColumnInfo(name = "group") val group: String?         //in che gruppo è, se pasta, se secondi...
 
 ){
     @PrimaryKey(autoGenerate = true) var uid: Long = 0

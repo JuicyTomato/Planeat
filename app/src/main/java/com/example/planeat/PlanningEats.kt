@@ -5,7 +5,6 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
@@ -15,8 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.preferencesDataStore
+
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.example.planeat.provaRoom.Ingredient
@@ -27,7 +25,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.prefs.Preferences
 
 
 class PlanningEats : AppCompatActivity() {
@@ -68,6 +65,10 @@ class PlanningEats : AppCompatActivity() {
     private var mealPreparationText: String = ""
     private var viewBLDRoom: String = "Breakfast"
 
+    //variabili per forward text
+    private lateinit var brText:String
+    private lateinit var lauText: String
+    private lateinit var dinText: String
 
 
     @SuppressLint("MissingInflatedId", "SimpleDateFormat")
@@ -82,8 +83,8 @@ class PlanningEats : AppCompatActivity() {
         //ottieni il contesto dall'Activity, dal Fragment o da qualsiasi altro contesto
         val context: Context = applicationContext
 
-        val stringListManager = StringListManager(context)
-        val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
+        val stringListPlanDS = StringListPlanDS(context)
+        val stringListFlow: Flow<List<String>> = stringListPlanDS.getStringList()
 
         val star = findViewById<ImageView>(R.id.star)
 
@@ -114,9 +115,9 @@ class PlanningEats : AppCompatActivity() {
             lifecycleScope.launch {
                 val dateRoomString = dateRoom.toString()
                 if (starState) {
-                    stringListManager.addStringToList(dateRoomString)
+                    stringListPlanDS.addStringToList(dateRoomString)
                 } else {
-                    stringListManager.removeStringFromList(dateRoomString)
+                    stringListPlanDS.removeStringFromList(dateRoomString)
                 }
             }
         }
@@ -134,12 +135,18 @@ class PlanningEats : AppCompatActivity() {
             withContext(Dispatchers.IO) {
                 val recipes: List<RecipeWithIngredient> = getRecipeFromDatabase(dateRoom.toString())
                 runOnUiThread {
-                    showRecipesByPosition(recipes, "Breakfast", findViewById(R.id.breakfastID))
-                    showRecipesByPosition(recipes, "Launch", findViewById(R.id.launchID))
-                    showRecipesByPosition(recipes, "Dinner", findViewById(R.id.dinnerID))
+                    brText = showRecipesByPosition(recipes, "Breakfast", findViewById(R.id.breakfastID))
+                    lauText = showRecipesByPosition(recipes, "Launch", findViewById(R.id.launchID))
+                    dinText = showRecipesByPosition(recipes, "Dinner", findViewById(R.id.dinnerID))
+                }
+                val forwardMeal = findViewById<ImageView>(R.id.forwardMeal)
+                forwardMeal.setOnClickListener {
+                    forwardMeal(brText, lauText, dinText)
                 }
             }
         }
+
+
 
         //per tornare indietro (aggiungi con intent put extra, che se vieni dalla main view torni a quella, altrimenti al plan eats)
         backButton.setOnClickListener {
@@ -147,6 +154,20 @@ class PlanningEats : AppCompatActivity() {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
+    }
+
+    //opzione forward per inviare in formato testo il meal
+    private fun forwardMeal(brText: String, lauText: String, dinText: String){
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            val textMeal = "Breakfast:\n$brText\nLaunch:\n$lauText\nDinner:\n$dinText"
+            putExtra(Intent.EXTRA_TEXT, textMeal)
+            type = "text/plain"
+
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     fun onClickBreakfast(view: View) {
@@ -295,7 +316,7 @@ class PlanningEats : AppCompatActivity() {
         recipes: List<RecipeWithIngredient>,
         position: String,
         textView: TextView
-    ) {
+    ): String {
         val filteredRecipes =
             recipes.filter { it.recipe.position.equals(position, ignoreCase = true) }
         val recipeText = StringBuilder()
@@ -318,6 +339,7 @@ class PlanningEats : AppCompatActivity() {
         }
 
         textView.text = recipeText.toString()
+        return textView.text as String
     }
 
     override fun onStop() {

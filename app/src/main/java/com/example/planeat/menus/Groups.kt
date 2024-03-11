@@ -1,4 +1,4 @@
-package com.example.planeat
+package com.example.planeat.menus
 
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
@@ -7,12 +7,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.GridLayout
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.planeat.MainActivity
+import com.example.planeat.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Groups: AppCompatActivity() {

@@ -16,9 +16,11 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe WHERE date = :type")
     fun getAllWhereDate(type: String): List<RecipeWithIngredient>
 
-    /*      //before adding @Relation
-    @Query("SELECT * FROM recipe WHERE date = :type")
-    fun getAllWhereDate(type: String): List<Recipe>
+    /*
+    //per printare solo quelli starred nel gruppo specifico
+    @Transaction
+    @Query("SELECT * FROM recipe WHERE starred = true AND group == :type")  //controlla se giusto
+    fun getAllWhereStarred(type: String): List<RecipeWithIngredient>
      */
 
     @Query("SELECT * FROM recipe WHERE uid IN (:userIds)")

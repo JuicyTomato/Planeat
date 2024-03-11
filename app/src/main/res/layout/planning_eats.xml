@@ -58,6 +58,7 @@
 
 
     <ImageView
+        android:id="@+id/forwardMeal"
         android:layout_width="46dp"
         android:layout_height="33dp"
         android:src="@drawable/share"
@@ -65,7 +66,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toEndOf="@+id/provolone"
-        app:layout_constraintTop_toTopOf="@+id/provolone">
+        app:layout_constraintTop_toTopOf="@+id/provolone"
+        android:clickable="true"
+        android:focusable="true">
 
     </ImageView>
 

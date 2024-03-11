@@ -15,6 +15,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.planeat.menus.Groups
+import com.example.planeat.menus.ShoppingList
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -79,8 +81,8 @@ class MainActivity : AppCompatActivity() {
 
         val context: Context = applicationContext
 
-        val stringListManager = StringListManager(context)
-        val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
+        val stringListPlanDS = StringListPlanDS(context)
+        val stringListFlow: Flow<List<String>> = stringListPlanDS.getStringList()
         var nearestFutureDate: String? = null
         // Raccogli il flusso dei dati solo una volta
         lifecycleScope.launch {

@@ -5,7 +5,6 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
@@ -251,8 +250,8 @@ class PlanYourEats: AppCompatActivity() {
         //ottieni il contesto dall'Activity, dal Fragment o da qualsiasi altro contesto
         val context: Context = applicationContext
 
-        val stringListManager = StringListManager(context)
-        val stringListFlow: Flow<List<String>> = stringListManager.getStringList()
+        val stringListPlanDS = StringListPlanDS(context)
+        val stringListFlow: Flow<List<String>> = stringListPlanDS.getStringList()
 
         //cambia colore al quadrante
         lifecycleScope.launch {
