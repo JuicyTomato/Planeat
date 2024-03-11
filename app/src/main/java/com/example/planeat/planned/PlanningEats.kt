@@ -1,4 +1,4 @@
-package com.example.planeat
+package com.example.planeat.planned
 
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
+import com.example.planeat.R
+import com.example.planeat.StringListPlanDS
 import com.example.planeat.provaRoom.Ingredient
 import com.example.planeat.provaRoom.RecipeDatabase
 import com.example.planeat.provaRoom.Recipe

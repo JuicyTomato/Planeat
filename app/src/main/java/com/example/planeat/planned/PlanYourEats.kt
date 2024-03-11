@@ -1,4 +1,4 @@
-package com.example.planeat
+package com.example.planeat.planned
 
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
@@ -12,6 +12,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.planeat.MainActivity
+import com.example.planeat.R
+import com.example.planeat.StringListPlanDS
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

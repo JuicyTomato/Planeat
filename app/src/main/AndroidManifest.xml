@@ -23,9 +23,14 @@
         </activity>
         <activity android:name=".menus.ShoppingList" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".FridgeList" android:exported="true"></activity>
-        <activity android:name=".PlanYourEats" android:exported="true"></activity>
+        <activity android:name=".planned.PlanYourEats" android:exported="true"></activity>
         <activity android:name=".menus.Groups" android:exported="true"></activity>
-        <activity android:name=".PlanningEats" android:exported="true"></activity>
+        <activity android:name=".planned.PlanningEats" android:exported="true"></activity>
+        <activity android:name=".menus.Shared" android:exported="true"></activity>
+        <activity android:name=".menus.sharedMeals.SharedMeal" android:exported="true"></activity>
+        <activity android:name=".menus.sharedMeals.RecipeActivity" android:exported="true"></activity>
+
+
     </application>
 
 </manifest>

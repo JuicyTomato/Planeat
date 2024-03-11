@@ -15,7 +15,10 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.planeat.planned.PlanYourEats
+import com.example.planeat.planned.PlanningEats
 import com.example.planeat.menus.Groups
+import com.example.planeat.menus.Shared
 import com.example.planeat.menus.ShoppingList
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.Flow
@@ -132,7 +135,12 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.personIcon -> {}
+                R.id.personIcon -> {
+                    val intent = Intent(this, Shared::class.java)
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                    //finish()  //già presente in onStop()
+                    return@setOnItemSelectedListener true
+                }
                 R.id.groupPeople -> {
                     //moveBulbToView(bulbImageView)
                     val intent = Intent(this, Groups::class.java)

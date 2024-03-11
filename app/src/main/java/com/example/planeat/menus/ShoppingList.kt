@@ -58,7 +58,12 @@ class ShoppingList : AppCompatActivity() {
 
                 R.id.shoppingListIcon -> return@setOnItemSelectedListener true
 
-                R.id.personIcon -> {}
+                R.id.personIcon -> {
+                    val intent = Intent(this, Shared::class.java)
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                    //finish()  //già presente in onStop()
+                    return@setOnItemSelectedListener true
+                }
                 R.id.groupPeople -> {
                     //moveBulbToView(bulbImageView)
                     val intent = Intent(this, Groups::class.java)

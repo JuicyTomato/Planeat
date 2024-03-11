@@ -87,8 +87,13 @@ class Groups: AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.personIcon -> {}
-                R.id.groupPeople -> {}
+                R.id.personIcon -> {
+                    val intent = Intent(this, Shared::class.java)
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                    //finish()  //già presente in onStop()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.groupPeople -> return@setOnItemSelectedListener true
             }
             false
         }
