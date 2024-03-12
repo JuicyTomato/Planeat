@@ -24,6 +24,7 @@ class Recipe(
     @ColumnInfo(name = "position") val position: String
     //    @ColumnInfo(name = "starred") val starred: Boolean     //se è nelle ricette salvate
     //    @ColumnInfo(name = "group") val group: String?         //in che gruppo è, se pasta, se secondi...
+    //    @ColumnInfo(name = "future") val future: String?       //uno string per il futuro... Così mi evito migrations strane... Nah forse non lo faccio
 
 ){
     @PrimaryKey(autoGenerate = true) var uid: Long = 0

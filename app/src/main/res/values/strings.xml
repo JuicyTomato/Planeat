@@ -16,4 +16,5 @@
     <string name="launch">Launch</string>
     <string name="breakfast">Breakfast</string>
     <string name="insert_shared_name">Insert shared name here</string>
+    <string name="saved_recipes">Saved recipes</string>
 </resources>

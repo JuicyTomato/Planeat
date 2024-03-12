@@ -177,13 +177,18 @@ class Shared: AppCompatActivity() {
         }
 
 
-        //RICORDA!!!!!!----------------------------------------------------------------------------------------------------------------------------------------------------
-        //rimuovi anche tutto contenuto dello SHARED
+        //RICORDA!!!!!!---------------------------------------------------------------------------------------------------------------------------------------------------
+        //rimuovi anche tutto contenuto dello SHARED, cioè ogni recipe dello shared eliminato
+
         val buttonBin = findViewById<Button>(R.id.buttonBin)
+        //bottone per annullare "cancellazione"
+        val buttonCloseX = findViewById<Button>(R.id.closeX)
+
         //rende invisibile addButton per visibile bin
         newButton.setOnLongClickListener {
             addButton.visibility = View.INVISIBLE
             buttonBin.visibility = View.VISIBLE
+            buttonCloseX.visibility = View.VISIBLE
 
             //rimuovi quadrante
             buttonBin.setOnClickListener {
@@ -192,6 +197,12 @@ class Shared: AppCompatActivity() {
                 }
                 addButton.visibility = View.VISIBLE
                 buttonBin.visibility = View.INVISIBLE
+                buttonCloseX.visibility = View.INVISIBLE
+            }
+            buttonCloseX.setOnClickListener {
+                addButton.visibility = View.VISIBLE
+                buttonBin.visibility = View.INVISIBLE
+                buttonCloseX.visibility = View.INVISIBLE
             }
 
             true

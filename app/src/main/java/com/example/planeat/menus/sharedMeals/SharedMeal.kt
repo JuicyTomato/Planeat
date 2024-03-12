@@ -33,6 +33,9 @@ class SharedMeal : AppCompatActivity() {
             addingRecipe("OK", gridLayout)
         }
 
+        //ROOMMIZZA
+
+
 
         val backButton = findViewById<Button>(R.id.backButton)
 
