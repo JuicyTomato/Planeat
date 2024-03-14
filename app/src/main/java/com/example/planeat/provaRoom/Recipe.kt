@@ -18,24 +18,25 @@ data class Recipe(
 
 @Entity
 class Recipe(
-    @ColumnInfo(name = "recipe_name") val recipeName: String?,
-    @ColumnInfo(name = "process") val process: String?,
-    @ColumnInfo(name = "date") val date: String?,
-    @ColumnInfo(name = "position") val position: String
-    //    @ColumnInfo(name = "starred") val starred: Boolean     //se è nelle ricette salvate
-    //    @ColumnInfo(name = "group") val group: String?         //in che gruppo è, se pasta, se secondi...
-    //    @ColumnInfo(name = "future") val future: String?       //uno string per il futuro... Così mi evito migrations strane... Nah forse non lo faccio
-
+    @ColumnInfo(name = "recipe_name") val recipeName: String?,  //nome ricetta
+    @ColumnInfo(name = "process") val process: String?,         //processo per fare ricetta ("metti acqua, butta pasta...")
+    @ColumnInfo(name = "date") val date: String?,               //data creazione recipe così nel load del giorno ho ricette corrette
+    @ColumnInfo(name = "position") val position: String,        //se è in breakfast, launch o dinner
+    @ColumnInfo(name = "groupz") val group: String?,
+    //@ColumnInfo(name = "starred") val starred: Int,             //se è nelle ricette salvate
+    //eliminata perchè inutile... BAsta utilizare solo groupz
+    //    @ColumnInfo(name = "future") val future: String?      //uno string per il futuro... Così mi evito migrations strane... Nah forse non lo faccio
+    @PrimaryKey(autoGenerate = true) val uid: Long = 0              //spostato su, prima al posto di constructor
 ){
-    @PrimaryKey(autoGenerate = true) var uid: Long = 0
+    constructor(id: Long, recipeName: String?, process: String?, date: String?, position: String, group: String?)
+            : this(uid = id, recipeName = recipeName, process = process, date = date, position = position, group = group)
 }
 
 @Entity
 class Ingredient(
-
-    @ColumnInfo(name = "name") val nameIngredient: String?,
-    @ColumnInfo(name = "quantity") val quantity: Int?,
-    @ColumnInfo(name = "unity_mes") val unityMes: String?,
+    @ColumnInfo(name = "name") val nameIngredient: String?,      //nome ingrediente
+    @ColumnInfo(name = "quantity") val quantity: Int?,           //quantità ingrediente
+    @ColumnInfo(name = "unity_mes") val unityMes: String?,       //unità di misura della quantità (ad ora fissata a 'gr')
     @ColumnInfo(name = "recipe_id") val recipeID: Long           //foreign key su Recipe su uid (sulla primary key)
 
 ){

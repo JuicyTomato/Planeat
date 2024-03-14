@@ -17,4 +17,8 @@
     <string name="breakfast">Breakfast</string>
     <string name="insert_shared_name">Insert shared name here</string>
     <string name="saved_recipes">Saved recipes</string>
+    <string name="meal_name">Meal name</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="preparation">Preparation</string>
+    <string name="insert_name_here">Insert name here</string>
 </resources>

@@ -6,6 +6,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
+import androidx.room.Upsert
 
 @Dao
 interface RecipeDao {
@@ -16,12 +18,18 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe WHERE date = :type")
     fun getAllWhereDate(type: String): List<RecipeWithIngredient>
 
-    /*
-    //per printare solo quelli starred nel gruppo specifico
+
+    //dubbio... Ha senso starred? se tanto aggiungo al gruppo... Quindi se avessi gruppoShared != null
+    // allora vuol dire che appartiene al gruppo segnato. Altrimenti no... Quindi starred non ha senso
+
     @Transaction
-    @Query("SELECT * FROM recipe WHERE starred = true AND group == :type")  //controlla se giusto
-    fun getAllWhereStarred(type: String): List<RecipeWithIngredient>
-     */
+    @Query("SELECT * FROM recipe WHERE groupz == :type")
+    fun getNameWhereGroup(type: String): List<Recipe>
+
+    @Transaction
+    @Query("SELECT * FROM recipe WHERE uid == :type")
+    fun getRecipeWithIngredientById(type: Long): List<RecipeWithIngredient>
+
 
     @Query("SELECT * FROM recipe WHERE uid IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<Recipe>
@@ -33,6 +41,10 @@ interface RecipeDao {
     @Insert
     fun insertAll(recipes: Recipe): Long
 
+    @Update
+    fun updateIngredient(recipe: Recipe)
+
+    //penso anche questo come @Upsert
     @Insert
     fun insertIngredient(vararg ingredients:Ingredient)
 

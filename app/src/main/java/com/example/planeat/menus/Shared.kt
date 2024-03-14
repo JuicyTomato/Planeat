@@ -170,6 +170,7 @@ class Shared: AppCompatActivity() {
             val buttonText = newButton.text.toString()
             //moveBulbToView(bulbImageView)
             val intent = Intent(this, SharedMeal::class.java)
+            intent.putExtra("name_shared", newButton.text)
             startActivity(
                 intent,
                 ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
@@ -179,6 +180,7 @@ class Shared: AppCompatActivity() {
 
         //RICORDA!!!!!!---------------------------------------------------------------------------------------------------------------------------------------------------
         //rimuovi anche tutto contenuto dello SHARED, cioè ogni recipe dello shared eliminato
+        //2 GRUPPI NON STESSO NOME
 
         val buttonBin = findViewById<Button>(R.id.buttonBin)
         //bottone per annullare "cancellazione"

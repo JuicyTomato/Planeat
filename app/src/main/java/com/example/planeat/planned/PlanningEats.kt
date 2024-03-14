@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
+import com.example.planeat.MainActivity
 import com.example.planeat.R
 import com.example.planeat.StringListPlanDS
 import com.example.planeat.provaRoom.Ingredient
@@ -33,16 +34,15 @@ class PlanningEats : AppCompatActivity() {
 
 
     // Funzione sospesa per eseguire operazioni di accesso al database
-    suspend fun getRecipeFromDatabase(dateRoom: String): List<RecipeWithIngredient> {
+    private suspend fun getRecipeFromDatabase(dateRoom: String): List<RecipeWithIngredient> {
         return withContext(Dispatchers.IO) {
-            // Ottieni il DAO (Data Access Object)
+            ////ottieni il DAO
             val recipeDao = db.recipeDao()
 
-            // Esegui l'operazione di accesso al database
+            //accesso DB
             val recipes: List<RecipeWithIngredient> = recipeDao.getAllWhereDate(dateRoom)
 
-
-            // Restituisci i risultati ottenuti dall'operazione di accesso al database
+            //return contenuto
             recipes
         }
     }
@@ -152,7 +152,7 @@ class PlanningEats : AppCompatActivity() {
 
         //per tornare indietro (aggiungi con intent put extra, che se vieni dalla main view torni a quella, altrimenti al plan eats)
         backButton.setOnClickListener {
-            val intent = Intent(this, PlanYourEats::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         }
 
@@ -270,8 +270,9 @@ class PlanningEats : AppCompatActivity() {
 
             val recipeId = withContext(Dispatchers.IO) {
                 // Aggiunge la ricetta
+                //default not starred e shared groupz è null
                 val insertedRecipeId = db.recipeDao()
-                    .insertAll(Recipe(mealNameText, mealPreparationText, dateRoom, viewBLDRoom))
+                    .insertAll(Recipe(mealNameText, mealPreparationText, dateRoom, viewBLDRoom, ""))
 
                 // Aggiunge gli ingredienti con l'id della ricetta appena inserita
                 for (pair in editTextPairsList) {

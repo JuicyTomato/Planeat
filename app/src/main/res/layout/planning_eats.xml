@@ -100,10 +100,12 @@
                 android:fontFamily="@font/relay_inter_bold"
                 android:text="@string/breakfast"
                 android:textColor="@color/textColor"
-                android:textSize="20sp"></TextView>
+                android:textSize="20sp">
+
+            </TextView>
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="97dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/breakfast_line">
 
@@ -140,12 +142,16 @@
                 android:fontFamily="@font/relay_inter_bold"
                 android:text="@string/launch"
                 android:textColor="@color/textColor"
-                android:textSize="20sp"></TextView>
+                android:textSize="20sp">
+
+            </TextView>
 
             <ImageView
                 android:layout_width="74dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/breakfast_line"></ImageView>
+                android:src="@drawable/breakfast_line">
+
+            </ImageView>
 
             <LinearLayout
                 android:id="@+id/small2"

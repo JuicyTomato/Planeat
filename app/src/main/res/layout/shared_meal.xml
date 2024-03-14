@@ -54,7 +54,6 @@
 
     </EditText>
 
-
     <ScrollView
         android:id="@+id/scrollViewRecipe"
         android:layout_width="match_parent"
@@ -67,7 +66,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5">
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintVertical_bias="0.0">
 
         <GridLayout
             android:id="@+id/gridRecipe"
@@ -81,9 +81,9 @@
 
             <Button
                 android:id="@+id/addRecipeShared"
-                android:background="@drawable/add_recipe_shared"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/add_recipe_shared"
                 android:text="+"
                 android:textSize="21sp">
 
@@ -91,7 +91,6 @@
 
         </GridLayout>
     </ScrollView>
-
 
     <ImageView
         android:id="@+id/imageView4"

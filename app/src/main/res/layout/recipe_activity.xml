@@ -26,22 +26,146 @@
 
     </ImageView>
 
-
-    <TextView
-        android:id="@+id/recipeName"
+    <EditText
+        android:id="@+id/recipeNameEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:fontFamily="@font/relay_inter_bold"
+        android:hint="@string/insert_name_here"
+        android:textColor="@color/textColor"
+        android:textColorHint="@color/textColor"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        android:layout_marginTop="20dp"
-        android:text="Csdgrsth"
-        android:textSize="20dp"
-        android:fontFamily="@font/relay_inter_bold"
-        android:textColor="@color/textColor"
         app:layout_constraintStart_toStartOf="@+id/sfondo"
         app:layout_constraintTop_toTopOf="@+id/sfondo">
 
-    </TextView>
+    </EditText>
+
+
+    <ImageView
+        android:id="@+id/editIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/edit"
+        app:layout_constraintBottom_toBottomOf="@+id/recipeNameEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintStart_toEndOf="@+id/recipeNameEdit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        android:clickable="true"
+        android:focusable="true">
+
+    </ImageView>
+
+    <ScrollView
+        android:id="@+id/scrollView5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="55dp"
+        android:gravity="top|start"
+        app:layout_constraintBottom_toTopOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/sfondo"
+        app:layout_constraintTop_toBottomOf="@+id/recipeNameEdit">
+
+        <LinearLayout
+            android:id="@+id/bigOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/breakfast"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/relay_inter_bold"
+                android:text="@string/ingredients"
+                android:textColor="@color/textColor"
+                android:textSize="20sp">
+
+            </TextView>
+
+            <ImageView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/breakfast_line">
+
+            </ImageView>
+
+            <LinearLayout
+                android:id="@+id/linearIngredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onClickBreakfast"
+                android:orientation="vertical">
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/buttonAdder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/long_stretch_rectangle"
+                android:text="+">
+
+            </Button>
+
+            <TextView
+                android:id="@+id/launch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/relay_inter_bold"
+                android:text="@string/preparation"
+                android:textColor="@color/textColor"
+                android:textSize="20sp">
+
+            </TextView>
+
+            <ImageView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/breakfast_line">
+
+            </ImageView>
+
+            <LinearLayout
+                android:id="@+id/small2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onClickLaunch"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/preparationEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Insert Here"
+                    android:background="@null"
+                    android:textColorHint="@color/textColor"
+                    android:textSize="18sp">
+
+                </EditText>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+
 
     <ImageView
         android:id="@+id/imageView4"
