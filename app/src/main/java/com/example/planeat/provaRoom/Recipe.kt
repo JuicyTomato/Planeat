@@ -28,6 +28,7 @@ class Recipe(
     //    @ColumnInfo(name = "future") val future: String?      //uno string per il futuro... Così mi evito migrations strane... Nah forse non lo faccio
     @PrimaryKey(autoGenerate = true) val uid: Long = 0              //spostato su, prima al posto di constructor
 ){
+    //Se primary non inserita la genera casuale
     constructor(id: Long, recipeName: String?, process: String?, date: String?, position: String, group: String?)
             : this(uid = id, recipeName = recipeName, process = process, date = date, position = position, group = group)
 }
@@ -44,7 +45,7 @@ class Ingredient(
 }
 
 
-//one-to-many relationship
+//many-to-many relationship         //prima scritto come one-to-may relationship
 data class RecipeWithIngredient(
     @Embedded val recipe: Recipe,
     @Relation(

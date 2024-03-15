@@ -59,7 +59,7 @@ class RecipeActivity : AppCompatActivity() {
 
 
     private val editTextPairsList = mutableListOf<Pair<EditText, EditText>>()
-
+    private var once: Boolean = true        //serve che così anche se spammando editIcon, crei solamente una sola istanza
     @SuppressLint("MissingInflatedId", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +88,16 @@ class RecipeActivity : AppCompatActivity() {
         val preparationEdit = findViewById<EditText>(R.id.preparationEdit)
         val buttonAdder = findViewById<Button>(R.id.buttonAdder)
 
+
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                val recipes: List<RecipeWithIngredient> = getAllById(buttonName)
+                runOnUiThread {
+                    showRecipes(recipes, recipeNameEdit, preparationEdit)
+                }
+            }
+        }
+
         //appena entri rende invisibili o meno le views, se fossi o meno in modalità edit
         if(!editState) {
             setVisibleView(recipeNameEdit, preparationEdit, buttonAdder, true)
@@ -109,6 +119,7 @@ class RecipeActivity : AppCompatActivity() {
         editIcon.setOnClickListener {
             editState = !editState
             setEditMode(editState, editIcon)
+            Log.d("IN", "ENTRATO1")
 
             //se editState fosse true vuol dire che è modalità editing, altrimenti solo visualizzazione
             //fatto al contrario: !editState, per chiarezza codice
@@ -116,12 +127,6 @@ class RecipeActivity : AppCompatActivity() {
                 //sia read che write
                 //rende visibili le Views
                 setVisibleView(recipeNameEdit, preparationEdit, buttonAdder, true)
-
-
-            } else {
-                //solo read, non write
-                //rende invisibili le Views
-                setVisibleView(recipeNameEdit, preparationEdit, buttonAdder, false)
 
                 //mostra ricette
                 lifecycleScope.launch {
@@ -133,24 +138,39 @@ class RecipeActivity : AppCompatActivity() {
                     }
                 }
 
+            } else {
+                //solo read, non write
+                //rende invisibili le Views
+                setVisibleView(recipeNameEdit, preparationEdit, buttonAdder, false)
 
                 //quando clicchi per disattivare allora salva, ma solo se è stato aggiunto almeno il nome
                 if(recipeNameEdit.text.toString().isNotEmpty()) {
                     lifecycleScope.launch {
                         withContext(Dispatchers.IO) {
                             val recipes: List<RecipeWithIngredient> = getAllById(buttonName)
-                            if(recipes.isEmpty())
-                            //salva la ricetta... DA VERIFICARE CON ID
-                            saveRecipe(recipeNameEdit, preparationEdit, nameShared)
+
+
+                            if(recipes.isEmpty()) {
+                                //salva la ricetta, nel caso...
+                                if(once) {
+                                    saveRecipe(recipeNameEdit, preparationEdit, nameShared)
+                                    Log.d("IN", "ENTRATO2")
+                                    //così crei una sola istanza di ricetta, e non tante quante volta spammi editIcon
+                                    once = false
+                                }
+                            }
                             else {
-                                //CAMBIA O RISOLVI
-                                //fa update allora del DB
+                                //...fa update allora del DB
                                 updateById(Recipe(recipeNameEdit.text.toString(), preparationEdit.text.toString(), "", "Breakfast", nameShared, buttonName))
-                                        Log.d("present", "presente già ID")
+                                Log.d("present", "presente già ID")
                             }
                         }
                     }
                 }
+
+
+
+
             }
         }
 

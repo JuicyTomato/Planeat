@@ -152,7 +152,7 @@
 
                 <EditText
                     android:id="@+id/preparationEdit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Insert Here"
                     android:background="@null"
