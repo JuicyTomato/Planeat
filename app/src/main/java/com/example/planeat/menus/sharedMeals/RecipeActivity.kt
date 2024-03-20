@@ -4,13 +4,16 @@ import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -19,33 +22,35 @@ import com.example.planeat.R
 import com.example.planeat.provaRoom.Ingredient
 import com.example.planeat.provaRoom.Recipe
 import com.example.planeat.provaRoom.RecipeDatabase
-import com.example.planeat.provaRoom.RecipeWithIngredient
+import com.example.planeat.provaRoom.RecipeGroup
+import com.example.planeat.provaRoom.RecipeIngredient
+import com.example.planeat.provaRoom.RecipeWithIngredientPair
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class RecipeActivity : AppCompatActivity() {
 
-    private suspend fun getAllById(uid: Long): List<RecipeWithIngredient> {
+    private suspend fun getAllById(uid: Long): List<RecipeWithIngredientPair> {
         return withContext(Dispatchers.IO) {
             //ottieni il DAO
             val recipeDao = db.recipeDao()
 
             //accesso DB
-            val recipes: List<RecipeWithIngredient> = recipeDao.getRecipeWithIngredientById(uid)
+            val recipes: List<RecipeWithIngredientPair> = recipeDao.getRecipeWithIngredientById(uid)
 
             //return contenuto
             recipes
         }
     }
 
-    private suspend fun updateById(recipe: Recipe) {
+    private suspend fun updateByRecipe(recipe: Recipe) {
         withContext(Dispatchers.IO) {
             //ottieni dao
             val recipeDao = db.recipeDao()
 
             //esegui l'operazione di aggiornamento
-            recipeDao.updateIngredient(recipe)
+            recipeDao.updateRecipe(recipe)
         }
     }
 
@@ -60,6 +65,7 @@ class RecipeActivity : AppCompatActivity() {
 
     private val editTextPairsList = mutableListOf<Pair<EditText, EditText>>()
     private var once: Boolean = true        //serve che così anche se spammando editIcon, crei solamente una sola istanza
+
     @SuppressLint("MissingInflatedId", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +75,7 @@ class RecipeActivity : AppCompatActivity() {
         val buttonName = intent.getLongExtra("button_id", 0L)
         //penso nome del gruppo
         val nameShared = intent.getStringExtra("name_shared")
-        //nome della
+        //nome della ricetta
         val nM = intent.getStringExtra("meal_name")
 
 
@@ -91,7 +97,7 @@ class RecipeActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                val recipes: List<RecipeWithIngredient> = getAllById(buttonName)
+                val recipes: List<RecipeWithIngredientPair> = getAllById(buttonName)
                 runOnUiThread {
                     showRecipes(recipes, recipeNameEdit, preparationEdit)
                 }
@@ -119,7 +125,6 @@ class RecipeActivity : AppCompatActivity() {
         editIcon.setOnClickListener {
             editState = !editState
             setEditMode(editState, editIcon)
-            Log.d("IN", "ENTRATO1")
 
             //se editState fosse true vuol dire che è modalità editing, altrimenti solo visualizzazione
             //fatto al contrario: !editState, per chiarezza codice
@@ -131,7 +136,7 @@ class RecipeActivity : AppCompatActivity() {
                 //mostra ricette
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
-                        val recipes: List<RecipeWithIngredient> = getAllById(buttonName)
+                        val recipes: List<RecipeWithIngredientPair> = getAllById(buttonName)
                         runOnUiThread {
                             showRecipes(recipes, recipeNameEdit, preparationEdit)
                         }
@@ -147,30 +152,27 @@ class RecipeActivity : AppCompatActivity() {
                 if(recipeNameEdit.text.toString().isNotEmpty()) {
                     lifecycleScope.launch {
                         withContext(Dispatchers.IO) {
-                            val recipes: List<RecipeWithIngredient> = getAllById(buttonName)
-
+                            val recipes: List<RecipeWithIngredientPair> = getAllById(buttonName)
+                            Log.d("present", "NONO già ID")
 
                             if(recipes.isEmpty()) {
                                 //salva la ricetta, nel caso...
                                 if(once) {
-                                    saveRecipe(recipeNameEdit, preparationEdit, nameShared)
-                                    Log.d("IN", "ENTRATO2")
-                                    //così crei una sola istanza di ricetta, e non tante quante volta spammi editIcon
+                                    saveRecipe(recipeNameEdit, preparationEdit, nameShared.toString())
+                                    //così crei una sola istanza di ricetta, e non tante quante volte spammi editIcon
                                     once = false
                                 }
+                                Log.d("present", "NO già ID")
+
                             }
                             else {
                                 //...fa update allora del DB
-                                updateById(Recipe(recipeNameEdit.text.toString(), preparationEdit.text.toString(), "", "Breakfast", nameShared, buttonName))
+                                updateByRecipe(Recipe(recipeNameEdit.text.toString(), preparationEdit.text.toString(), "", "Breakfast", buttonName))
                                 Log.d("present", "presente già ID")
                             }
                         }
                     }
                 }
-
-
-
-
             }
         }
 
@@ -213,31 +215,46 @@ class RecipeActivity : AppCompatActivity() {
 
 
     //roommizza e salva ricetta... Utilizzata sia in editIcon.setclick{} che in backButton.setClick{}
-    private fun saveRecipe(mealNameText: EditText, mealPreparationText: EditText, nameShared: String?){
+    private fun saveRecipe(mealNameText: EditText, mealPreparationText: EditText, nameShared: String){
 
         lifecycleScope.launch {
 
-            val recipeId = withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                //for current id recipe
+                val rec = Recipe(mealNameText.text.toString(), mealPreparationText.text.toString(), "", "Breakfast")
                 // Aggiunge la ricetta
                 //default not starred e shared groupz è null
-                val insertedRecipeId = db.recipeDao()
-                    .insertAll(Recipe(mealNameText.text.toString(), mealPreparationText.text.toString(), "", "Breakfast", nameShared))
+                val insertedRecipeId = db.recipeDao().insertAll(rec)
+                //potevo decidere di passare id, o rifare query al db per ottenere groupsh. Optato per seconda nonostante
+                // la prima sia più easy (passare con putExtra), ma seconda era più comoda
+                val idGroup = db.recipeDao().findByNameShared(nameShared)
+                //salva anche nella tabella RecipeGroup
+                db.recipeDao().insertRecipeGroup(RecipeGroup(insertedRecipeId, idGroup.idGroup))
 
                 // Aggiunge gli ingredienti con l'id della ricetta appena inserita
                 for (pair in editTextPairsList) {
                     val testoIngredient = pair.first.text.toString()
                     val testoQuantita = pair.second.text.toString()
-                    db.recipeDao().insertIngredient(
-                        Ingredient(
-                            testoIngredient,
-                            testoQuantita.toInt(),
-                            "gr",
-                            insertedRecipeId
-                        )
-                    )
+                    val ing = Ingredient(testoIngredient, "gr")
+
+                    //prende nome Ingrediente...
+                    //...se id fosse già dentro nella tabella, allora aggiungi solo nella tabella RecipeIngredient (quella mezzana)
+                    //altrimenti aggiungi ingrediente e metti in quella mezzana (tabella)
+                    val existinIngredient = db.recipeDao().getAllIngredientsWhereName(testoIngredient)
+                    Log.d("IDz", existinIngredient.toString())
+                    if(existinIngredient.isNotEmpty()){
+                        //inserisce nella tabella di mezzo e associa ingredienti con ricetta
+                        //prendo della lista ultimo con idIngrediente... tanto dovrebbe essere sempre uno e al massimo poco importa perchè avrebbe
+                        // lo stesso nome, quindi SBAM
+                        db.recipeDao().insertRecipeIngredient(RecipeIngredient(insertedRecipeId, existinIngredient.last().idIngredient, testoQuantita.toInt()))
+                    } else {
+                        //aggiunge ingrediente + inserisce tabella di mezzo
+                        val insertedIngredientId = db.recipeDao().insertIngredient(ing)
+                        db.recipeDao().insertRecipeIngredient(RecipeIngredient(insertedRecipeId, insertedIngredientId, testoQuantita.toInt()))
+                    }
                 }
 
-                insertedRecipeId
+
             }
 
             /*
@@ -298,7 +315,7 @@ class RecipeActivity : AppCompatActivity() {
     //Quella modificata
     //se ricetta già salvata, semplicemente la mostra... Da rifare
     @SuppressLint("SetTextI18n")
-    private fun showRecipes(recipes: List<RecipeWithIngredient>, recipeNameEdit: EditText, preparationEdit: EditText){
+    private fun showRecipes(recipes: List<RecipeWithIngredientPair>, recipeNameEdit: EditText, preparationEdit: EditText){
         val recipeText = StringBuilder()
 
         for (recipeWithIngredient in recipes) {
@@ -310,11 +327,11 @@ class RecipeActivity : AppCompatActivity() {
             // lista ingredienti
             for (ingredient in ingredients) {
                 val ingredientName = ingredient.nameIngredient
-                val quantity = ingredient.quantity
+                //val quantity = ingredient.quantity
                 val unityMes = ingredient.unityMes
 
-
-                recipeText.append("\t\t-$ingredientName\t$quantity $unityMes\n")
+                //recipeText.append("\t\t-$ingredientName\t$quantity $unityMes\n")
+                recipeText.append("\t\t-$ingredientName\t $unityMes\n")
 
             }
 
@@ -323,6 +340,8 @@ class RecipeActivity : AppCompatActivity() {
 
     }
 
+    //TEXT WATCHER SU EDITTEXT1. Quando scrivi ingrediente ti seleziona quelli già salvati. Nel caso non lo avessi mai
+    //salvato, allora lo salva
     //aggiunge le editText premendo il button +
     private fun addIngredientEditText(){
         val linearIngredients = findViewById<LinearLayout>(R.id.linearIngredients)
@@ -333,14 +352,19 @@ class RecipeActivity : AppCompatActivity() {
         )
         linearLayout.orientation = LinearLayout.HORIZONTAL
 
+        //AutoCompleteTextView al posto che editText... Semplicemente cambiato
         //ingredienti
-        val editText1 = EditText(this)
+        val editText1 = AutoCompleteTextView(this)
         val params1 = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         editText1.layoutParams = params1
         editText1.hint = "Insert first ingredient"
+
+        //aggiunge textWatcher alla AutoCompleteTextView
+        //così compaiono ingredienti mentre scrivi
+        textWatcher(editText1)
 
         //quantità
         val editText2 = EditText(this)
@@ -356,10 +380,49 @@ class RecipeActivity : AppCompatActivity() {
         val editTextPair = Pair(editText1, editText2)
         editTextPairsList.add(editTextPair)
 
+
         //aggiunge alla view
         linearIngredients?.addView(linearLayout)
         linearLayout.addView(editText1)
         linearLayout.addView(editText2)
+    }
+
+    //così compaiono ingredienti mentre scrivi nella text degli ingredienti
+    private fun textWatcher(autoCompleteTextView: AutoCompleteTextView){
+
+        // Crea un TextWatcher per l'AutoCompleteTextView
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Non è necessario implementare questo metodo
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Non è necessario implementare questo metodo
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+                // recupera gli ingredienti dal database che corrispondono al testo inserito
+                lifecycleScope.launch {
+                    val matchingIngredients = withContext(Dispatchers.IO) {
+                        db.recipeDao().getAllIngredientsBeginLike(s.toString())
+                    }
+
+                    val arrayIngredient = mutableListOf<String>()
+                    for(ingredient in matchingIngredients){
+                        arrayIngredient.add(ingredient.nameIngredient.toString())
+                    }
+
+                    //crea un adapter con gli ingredienti corrispondenti e impostalo sull'AutoCompleteTextView
+                    val adapter = ArrayAdapter(this@RecipeActivity, android.R.layout.simple_dropdown_item_1line, arrayIngredient)
+                    autoCompleteTextView.setAdapter(adapter)
+                }
+            }
+        }
+
+        //aggiungi il TextWatcher all'AutoCompleteTextView
+        autoCompleteTextView.addTextChangedListener(textWatcher)
+
     }
 
     override fun onStop() {

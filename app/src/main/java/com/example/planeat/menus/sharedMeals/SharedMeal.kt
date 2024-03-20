@@ -8,11 +8,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import android.widget.GridLayout
 import android.widget.ScrollView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -20,28 +17,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.example.planeat.R
 import com.example.planeat.menus.Shared
-import com.example.planeat.provaRoom.Ingredient
+import com.example.planeat.provaRoom.GroupSh
 import com.example.planeat.provaRoom.Recipe
 import com.example.planeat.provaRoom.RecipeDatabase
-import com.example.planeat.provaRoom.RecipeWithIngredient
+import com.example.planeat.provaRoom.RecipeWithGroupPair
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SharedMeal : AppCompatActivity() {
-
-    private suspend fun getRecipeNameFromDatabase(type: String): List<Recipe> {
-        return withContext(Dispatchers.IO) {
-            //ottieni il DAO
-            val recipeDao = db.recipeDao()
-
-            //accesso DB
-            val recipes: List<Recipe> = recipeDao.getNameWhereGroup(type)
-
-            //return contenuto
-            recipes
-        }
-    }
 
     private val db by lazy {
         Room.databaseBuilder(
@@ -53,57 +37,28 @@ class SharedMeal : AppCompatActivity() {
 
     private lateinit var nameMeal: String
     private var recipeName: String? = ""
-    private lateinit var alertDialog: AlertDialog
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.shared_meal)
-        val context: Context = applicationContext
 
         val scrollView = findViewById<ScrollView>(R.id.scrollViewRecipe)
         val gridLayout = scrollView.findViewById<GridLayout>(R.id.gridRecipe)
-        val addButton = findViewById<Button>(R.id.addRecipeShared)
+        val addButton = findViewById<Button>(R.id.addRecipeNew)
 
         //nome del gruppo
         val nameShared = intent.getStringExtra("name_shared")
-        //asssegno a recipeName che essendo globale posso usarla nella funzione setupButtonAction
+        //assegno a recipeName che essendo globale posso usarla nella funzione setupButtonAction
         // senza passarla come argomento
         recipeName = nameShared
 
 
         addButton.setOnClickListener {
 
-
-            //NO ALERT DIALOG IN CUI INSERISCI NOME. Clicchi +, poi ti porta direttamente a RecipeActivity
+            //clicchi +, poi ti porta direttamente a RecipeActivity
             // inserisci tutti i valori e BOOM, tornando indietro hai già nome nel coso
-           /* val alertDialogBuilder = AlertDialog.Builder(this)
-            alertDialogBuilder.setView(R.layout.alert_dialog_planning)
-            alertDialogBuilder.setPositiveButton("SAVE") { dialog, _ ->
 
-                //nome piatto
-                val nameRecipe = findViewById<EditText>(R.id.sharedName)
-                nameMeal = nameRecipe.text.toString()
-
-                if (nameMeal.isEmpty()) {
-                    Toast.makeText(context, "At least one letter to name the group", Toast.LENGTH_SHORT).show()
-                } else {
-                    val nM = nameRecipe?.text.toString()
-                    addingRecipe(nM, gridLayout)
-                    val intent = Intent(this, RecipeActivity::class.java)
-                    intent.putExtra("meal_name", nM)
-                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-                }
-
-
-                dialog.dismiss()
-            }
-            //global variable
-            alertDialog = alertDialogBuilder.create()
-            alertDialog.show()
-
-
-            */
             val intent = Intent(this, RecipeActivity::class.java)
             //manda nome del gruppo, quindi quando si tornada RecipeActivity compaiono la lista di tutte le ricette
             //essendo che dovrebbe esserci nessuno gruppo con lo stesso nome
@@ -117,9 +72,17 @@ class SharedMeal : AppCompatActivity() {
 
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                val recipes: List<Recipe> = getRecipeNameFromDatabase(nameShared.toString())
+                val recipes: List<RecipeWithGroupPair> = db.recipeDao().getNameWhereGroup(nameShared.toString())
+                lateinit var recipeList: List<Recipe>
+                //aspetta che aggiungo nella tebella a metà
+                for(re in recipes){
+                    recipeList = re.recipes
+
+                    Log.d("reci", re.toString())
+                }
+
                 runOnUiThread {
-                    showRecipesByGroup(recipes, gridLayout)
+                    showRecipesByGroup(recipeList, gridLayout)
                 }
             }
         }
@@ -173,18 +136,14 @@ class SharedMeal : AppCompatActivity() {
     }
 
 
-    //FINE
-
-
 
     //visualizza i nomi delle ricette già salvate
     private fun showRecipesByGroup(recipes: List<Recipe>, gridLayout: GridLayout){
         for (recipeName in recipes) {
             val recipe = recipeName.recipeName
-            val id = recipeName.uid
+            val id = recipeName.idRecipe
             runOnUiThread {
                 addingRecipe(recipe.toString(), gridLayout, id)
-                Log.d("ID", id.toString())
             }
         }
     }

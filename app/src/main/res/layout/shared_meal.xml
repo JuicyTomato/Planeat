@@ -54,6 +54,9 @@
 
     </EditText>
 
+
+
+
     <ScrollView
         android:id="@+id/scrollViewRecipe"
         android:layout_width="match_parent"
@@ -80,14 +83,25 @@
             android:columnCount="1">
 
             <Button
-                android:id="@+id/addRecipeShared"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/addRecipeExist"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
                 android:background="@drawable/add_recipe_shared"
-                android:text="+"
-                android:textSize="21sp">
+                android:text="add existing recipe"
+                android:textSize="11sp">
 
             </Button>
+
+            <Button
+                android:id="@+id/addRecipeNew"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:background="@drawable/add_recipe_shared"
+                android:text="add new recipe"
+                android:textSize="11sp">
+
+            </Button>
+
 
         </GridLayout>
     </ScrollView>

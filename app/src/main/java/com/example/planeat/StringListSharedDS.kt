@@ -1,4 +1,4 @@
-package com.example.planeat
+/*package com.example.planeat
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -41,5 +41,7 @@ class StringListSharedDS(context: Context) {
         }
     }
 }
+
+ */
 
 

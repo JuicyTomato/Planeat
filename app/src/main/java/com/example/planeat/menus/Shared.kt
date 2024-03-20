@@ -5,6 +5,7 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
@@ -16,15 +17,27 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import com.example.planeat.MainActivity
 import com.example.planeat.R
-import com.example.planeat.StringListSharedDS
 import com.example.planeat.menus.sharedMeals.SharedMeal
+import com.example.planeat.provaRoom.GroupSh
+import com.example.planeat.provaRoom.RecipeDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Shared: AppCompatActivity() {
+
+    private val db by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            RecipeDatabase::class.java, "database-name"
+        ).build()
+    }
+
     private lateinit var alertDialog: AlertDialog
     private lateinit var sharedNameText: String
 
@@ -40,8 +53,6 @@ class Shared: AppCompatActivity() {
         val gridLayout = scrollView.findViewById<GridLayout>(R.id.griddone)
         val addButton = findViewById<Button>(R.id.pulsantone)
 
-        val context: Context = applicationContext
-        val stringListSharedDS = StringListSharedDS(context)
 
         lifecycleScope.launch {
 
@@ -51,21 +62,19 @@ class Shared: AppCompatActivity() {
             stringListSharedDS.removeStringFromList(stringToRemove)
              */
 
-            // Recupero della lista di stringhe come Flow
-            val stringListFlow: Flow<List<String>> = stringListSharedDS.getStringList()
-
-            stringListFlow.collect { stringList ->
-                //rimuovi vecchi bottoni e aggiungi i nuovi
+            withContext(Dispatchers.IO) {
+                //recupero della lista di shared
+                val stringListShared = db.recipeDao().getAllShared()
 
                 //rimuove i bottoni vecchi
                 gridLayout.removeAllViews()
-
                 //aggiungi bottone + testo per ogni elemento della lista
-                stringList.forEach { string ->
-                    if(string.isNotBlank())
-                    addingShared(string, gridLayout, addButton, stringListSharedDS)
+                for (shared in stringListShared) {
+                    addingShared(
+                        shared.nameGroup.toString(),
+                        gridLayout,
+                        addButton)
                 }
-
             }
         }
 
@@ -82,23 +91,29 @@ class Shared: AppCompatActivity() {
 
 
                 val sharedName = alertDialog.findViewById<EditText?>(R.id.sharedName)
-                //nome piatto
+                //nome gruppo
                 sharedNameText = sharedName?.text.toString()
 
                 if (sharedNameText.isEmpty()) {
-                    Toast.makeText(context, "At least one letter to name the group", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "At least one letter to name the group", Toast.LENGTH_SHORT).show()
                 } else {
-
-                    addingShared(sharedNameText, gridLayout, addButton, stringListSharedDS)
-
-                    //aggiungi a dataStore per il retrieve dei dati quando rientri nell'app
                     lifecycleScope.launch {
-                        stringListSharedDS.addStringToList(sharedNameText)
-                    }
+                        withContext(Dispatchers.IO) {
+                            val stringListShared = db.recipeDao().getAllShared()
 
+                            if(stringListShared.any{it.nameGroup == sharedNameText}) {
+                                withContext(Dispatchers.Main) {
+                                Toast.makeText(applicationContext, "Already a Group with that name", Toast.LENGTH_SHORT).show()
+                                 }
+                            } else {
+                               addingShared(sharedNameText, gridLayout, addButton)
+                                //aggiungi al db per il retrieve dei dati quando rientri nell'app
+                                db.recipeDao().insertShared(GroupSh(sharedNameText))
+                            }
+                        }
+                    }
                     dialog.dismiss()
                 }
-
             }
 
             //global variable
@@ -147,7 +162,7 @@ class Shared: AppCompatActivity() {
         }
     }
 
-    private fun addingShared(name: String, gridLayout: GridLayout, addButton: Button, stringListSharedDS: StringListSharedDS){
+    private fun addingShared(name: String, gridLayout: GridLayout, addButton: Button){
         val newButton = Button(this)
         //ID inutilizzato
         //newButton.id = View.generateViewId()
@@ -164,7 +179,9 @@ class Shared: AppCompatActivity() {
         newButton.background = icon
         newButton.text = name
 
-        gridLayout.addView(newButton)
+        runOnUiThread {
+            gridLayout.addView(newButton)
+        }
         newButton.setOnClickListener {
             //testo bottone per activity successiva
             val buttonText = newButton.text.toString()
@@ -179,7 +196,7 @@ class Shared: AppCompatActivity() {
 
 
         //RICORDA!!!!!!---------------------------------------------------------------------------------------------------------------------------------------------------
-        //rimuovi anche tutto contenuto dello SHARED, cioè ogni recipe dello shared eliminato
+        //Quando elimini gruppo, rimuovi anche tutto contenuto dello SHARED, cioè ogni recipe dello shared eliminato
         //2 GRUPPI NON STESSO NOME
 
         val buttonBin = findViewById<Button>(R.id.buttonBin)
@@ -195,16 +212,29 @@ class Shared: AppCompatActivity() {
             //rimuovi quadrante
             buttonBin.setOnClickListener {
                 lifecycleScope.launch {
-                    stringListSharedDS.removeStringFromList(name)
+                    withContext(Dispatchers.IO) {
+                        val groupshDelete = db.recipeDao().findByNameShared(name)
+                        db.recipeDao().deleteShared(groupshDelete)
+
+                        runOnUiThread {
+                            addButton.visibility = View.VISIBLE
+                            buttonBin.visibility = View.INVISIBLE
+                            buttonCloseX.visibility = View.INVISIBLE
+                        }
+                    }
                 }
-                addButton.visibility = View.VISIBLE
-                buttonBin.visibility = View.INVISIBLE
-                buttonCloseX.visibility = View.INVISIBLE
+                //per riaggiornare contenuto gruppi nella activity. Trova altra soluzione, ma altrimenti se elimino
+                // non si aggiornavano
+                finish()
+                startActivity(intent)
+
             }
             buttonCloseX.setOnClickListener {
+
                 addButton.visibility = View.VISIBLE
                 buttonBin.visibility = View.INVISIBLE
                 buttonCloseX.visibility = View.INVISIBLE
+
             }
 
             true

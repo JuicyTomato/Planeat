@@ -23,7 +23,8 @@ import com.example.planeat.StringListPlanDS
 import com.example.planeat.provaRoom.Ingredient
 import com.example.planeat.provaRoom.RecipeDatabase
 import com.example.planeat.provaRoom.Recipe
-import com.example.planeat.provaRoom.RecipeWithIngredient
+import com.example.planeat.provaRoom.RecipeIngredient
+import com.example.planeat.provaRoom.RecipeWithIngredientPair
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -34,13 +35,13 @@ class PlanningEats : AppCompatActivity() {
 
 
     // Funzione sospesa per eseguire operazioni di accesso al database
-    private suspend fun getRecipeFromDatabase(dateRoom: String): List<RecipeWithIngredient> {
+    private suspend fun getRecipeFromDatabase(dateRoom: String): List<RecipeWithIngredientPair> {
         return withContext(Dispatchers.IO) {
             ////ottieni il DAO
             val recipeDao = db.recipeDao()
 
             //accesso DB
-            val recipes: List<RecipeWithIngredient> = recipeDao.getAllWhereDate(dateRoom)
+            val recipes: List<RecipeWithIngredientPair> = recipeDao.getAllWhereDate(dateRoom)
 
             //return contenuto
             recipes
@@ -135,7 +136,7 @@ class PlanningEats : AppCompatActivity() {
         //per visualizzare ricette nella corretta editText
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                val recipes: List<RecipeWithIngredient> = getRecipeFromDatabase(dateRoom.toString())
+                val recipes: List<RecipeWithIngredientPair> = getRecipeFromDatabase(dateRoom.toString())
                 runOnUiThread {
                     brText = showRecipesByPosition(recipes, "Breakfast", findViewById(R.id.breakfastID))
                     lauText = showRecipesByPosition(recipes, "Launch", findViewById(R.id.launchID))
@@ -194,6 +195,9 @@ class PlanningEats : AppCompatActivity() {
     @SuppressLint("InflateParams")
     fun showDialog() {
 
+        //QUANDO DIGITI INGREDIENTE COMPAIONO QUELLI GIA' INSERITI
+        //GUARDA QUIIIIIIIIIII----------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------------------------
         //mostra Alertdialog
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setView(R.layout.alert_dialog_planning)
@@ -269,23 +273,22 @@ class PlanningEats : AppCompatActivity() {
             val dateRoom = intent.getStringExtra("roomDate")
 
             val recipeId = withContext(Dispatchers.IO) {
+                val rec = Recipe(mealNameText, mealPreparationText, dateRoom, viewBLDRoom)
                 // Aggiunge la ricetta
                 //default not starred e shared groupz è null
                 val insertedRecipeId = db.recipeDao()
-                    .insertAll(Recipe(mealNameText, mealPreparationText, dateRoom, viewBLDRoom, ""))
+                    .insertAll(rec)
 
                 // Aggiunge gli ingredienti con l'id della ricetta appena inserita
                 for (pair in editTextPairsList) {
                     val testoIngredient = pair.first.text.toString()
                     val testoQuantita = pair.second.text.toString()
-                    db.recipeDao().insertIngredient(
-                        Ingredient(
-                            testoIngredient,
-                            testoQuantita.toInt(),
-                            "gr",
-                            insertedRecipeId
-                        )
-                    )
+                    val ing = Ingredient(testoIngredient, "gr")
+                    db.recipeDao().insertIngredient(ing)
+
+                    //palese duplicazione
+                    //inserisce nella tabella di mezzo e associa ingredienti con ricetta
+                    db.recipeDao().insertRecipeIngredient(RecipeIngredient(rec.idRecipe, ing.idIngredient, testoQuantita.toInt()))
                 }
 
                 insertedRecipeId
@@ -316,7 +319,7 @@ class PlanningEats : AppCompatActivity() {
 
     //in base alla "posizione" delle ricette, vengono aggiunti nella editText corretta
     private fun showRecipesByPosition(
-        recipes: List<RecipeWithIngredient>,
+        recipes: List<RecipeWithIngredientPair>,
         position: String,
         textView: TextView
     ): String {
@@ -332,9 +335,11 @@ class PlanningEats : AppCompatActivity() {
             // lista ingredienti
             for (ingredient in ingredients) {
                 val ingredientName = ingredient.nameIngredient
-                val quantity = ingredient.quantity
+                //val quantity = ingredient.quantity
                 val unityMes = ingredient.unityMes
-                recipeText.append("\t\t-$ingredientName\t$quantity $unityMes\n")
+
+                //recipeText.append("\t\t-$ingredientName\t$quantity $unityMes\n")
+                recipeText.append("\t\t-$ingredientName\t$unityMes\n")
             }
 
             recipeText.append("\nPreparation:\n")
